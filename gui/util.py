@@ -29,3 +29,5 @@ def fill_sprites():
         walk_sprites.append(get_image("Sprites/"+str(i)+".png"))
     # for j in range (1,9):
     #     jump_sprites.append(get_image("Sprites/JUMPING"+str(j)+"j.png"))
+
+
