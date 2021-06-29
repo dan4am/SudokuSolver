@@ -1,14 +1,16 @@
-import json
+import sys
+sys.path.append("..")
+from src.image_processing import *
 #
-# test = [[9,0,0,4,0,0,0,0,0],
-#         [0,0,8,0,2,9,4,0,0],
-#         [0,0,7,8,0,0,0,0,3],
-#         [1,7,0,5,0,0,0,4,0],
-#         [0,0,0,0,9,8,0,0,7],
-#         [8,5,0,0,0,7,6,0,0],
-#         [6,0,3,9,0,1,0,0,0],
-#         [0,0,0,0,0,0,0,0,9],
-#         [4,0,0,2,0,0,0,8,0]]
+# default_board =   [[9, 0, 0, 4, 0, 0, 0, 0, 0],
+#                    [0, 0, 8, 0, 2, 9, 4, 0, 0],
+#                    [0, 0, 7, 8, 0, 0, 0, 0, 3],
+#                    [1, 7, 0, 5, 0, 0, 0, 4, 0],
+#                    [0, 0, 0, 0, 9, 8, 0, 0, 7],
+#                    [8, 5, 0, 0, 0, 7, 6, 0, 0],
+#                    [6, 0, 3, 9, 0, 1, 0, 0, 0],
+#                    [0, 0, 0, 0, 0, 0, 0, 0, 9],
+#                    [4, 0, 0, 2, 0, 0, 0, 8, 0]]
 
 
 # default_board = [[9, 0, 0, 4, 0, 0, 8, 7, 0],
@@ -21,25 +23,76 @@ import json
 #                  [7, 0, 0, 0, 0, 4, 0, 0, 9],
 #                  [4, 9, 0, 2, 0, 0, 0, 8, 0]]
 default = []
-default_board = [[0,9,0,8,0,0,0,0,0],
-  [1,0,4,3,5,0,0,0,0],
-  [5,6,0,4,2,0,3,7,0],
-  [9,3,5,1,0,8,0,4,0],
-  [0,0,6,5,0,4,8,0,0],
-  [0,4,0,7,0,2,6,5,3],
-  [0,5,3,0,4,7,0,8,6],
-  [0,0,0,0,8,5,7,0,4],
-  [0,0,0,0,0,3,0,9,0]]
+# default_board = [[0,0,3,0,2,0,6,0,0],
+#                  [9,0,0,3,0,5,0,0,1],
+#                  [0,0,1,8,0,6,4,0,0],
+#                  [0,0,8,1,0,2,9,0,0],
+#                  [7,0,0,0,0,0,0,0,8],
+#                  [0,0,6,7,0,8,2,0,0],
+#                  [0,0,2,6,0,9,5,0,0],
+#                  [8,0,0,2,0,3,0,0,9],
+#                  [0,0,5,0,1,0,3,0,0]]
 
-test_result = [[9,0,0,4,0,0,0,0,0],
-               [0,0,8,0,2,9,4,0,0],
-               [0,0,7,8,0,0,0,0,3],
-               [1,7,0,5,0,0,0,4,0],
-               [0,0,0,0,9,8,0,0,7],
-               [8,5,0,0,0,7,6,0,0],
-               [6,0,3,9,0,1,0,0,0],
-               [0,0,0,0,0,0,0,0,9],
-               [4,0,0,2,0,0,0,8,0]]
+# default_board=[[0,1,0,0,0,7,3,0,0],
+#                [0,0,0,3,0,0,5,0,9],
+#                [0,0,6,8,0,0,0,0,0],
+#                [0,8,0,0,9,0,0,0,0],
+#                [0,0,0,5,0,2,0,0,0],
+#                [5,0,9,7,0,0,0,0,1],
+#                [0,0,7,0,0,3,0,8,4],
+#                [9,6,1,0,0,0,0,0,5],
+#                [8,4,3,2,5,0,0,0,0]]
+
+# default_board = [[0,0,3,0,2,0,6,0,0],
+#    [9,0,0,3,0,5,0,0,1],
+#    [0,0,1,8,0,6,4,0,0],
+#    [0,0,8,1,0,2,9,0,0],
+#    [7,0,0,0,0,0,0,0,8],
+#    [0,0,6,7,0,8,2,0,0],
+#    [0,0,2,6,0,9,5,0,0],
+#    [8,0,0,2,0,3,0,0,9],
+#    [0,0,5,0,1,0,3,0,0]]
+#
+# default_board = [[0, 9, 0, 8, 0, 0, 0, 0, 0],
+#                  [1, 0, 4, 3, 5, 0, 0, 0, 0],
+#                  [5, 6, 0, 4, 2, 0, 3, 7, 0],
+#                  [9, 3, 5, 1, 0, 8, 0, 4, 0],
+#                  [0, 0, 6, 5, 0, 4, 8, 0, 0],
+#                  [0, 4, 0, 7, 0, 2, 6, 5, 3],
+#                  [0, 5, 3, 0, 4, 7, 0, 8, 6],
+#                  [0, 0, 0, 0, 8, 5, 7, 0, 4],
+#                  [0, 0, 0, 0, 0, 3, 0, 9, 0]]
+
+# default_board = [[2,0,5,9,1,0,0,0,0],
+#                  [0,0,0,7,0,2,6,0,0],
+#                  [7,9,0,0,5,0,0,2,8],
+#                  [6,0,7,0,3,0,0,5,0],
+#                  [0,2,0,0,4,0,8,1,0],
+#                  [5,0,0,1,6,0,0,0,3],
+#                  [0,0,1,0,0,0,0,0,9],
+#                  [0,6,0,0,0,0,0,8,0],
+#                  [3,0,0,0,0,5,0,0,0]]
+
+
+default_board = [[0,0,0,0,0,9,0,0,0],
+                 [1,0,5,4,7,0,0,8,0],
+                 [4,8,0,0,0,0,5,0,0],
+                 [0,4,8,0,0,0,0,6,0],
+                 [2,0,0,0,8,7,0,0,0],
+                 [0,9,0,2,0,0,1,3,0],
+                 [0,0,2,3,6,0,0,0,5],
+                 [6,0,4,0,0,8,7,0,2],
+                 [0,0,0,0,0,2,0,4,6]]
+
+test_result = [[9, 0, 0, 4, 0, 0, 0, 0, 0],
+               [0, 0, 8, 0, 2, 9, 4, 0, 0],
+               [0, 0, 7, 8, 0, 0, 0, 0, 3],
+               [1, 7, 0, 5, 0, 0, 0, 4, 0],
+               [0, 0, 0, 0, 9, 8, 0, 0, 7],
+               [8, 5, 0, 0, 0, 7, 6, 0, 0],
+               [6, 0, 3, 9, 0, 1, 0, 0, 0],
+               [0, 0, 0, 0, 0, 0, 0, 0, 9],
+               [4, 0, 0, 2, 0, 0, 0, 8, 0]]
 
 def define_unchangeables():
     for line in range (9):
@@ -50,7 +103,10 @@ def define_unchangeables():
             else:
                 default[-1].append(1)
 
-
+def copy_board(array):
+    for i in range(len (array)):
+        for j in range (len (array[0])):
+            default_board[i][j] = array[i][j]
 
 
 def check_if_number_in_line(number, line):
@@ -105,7 +161,7 @@ def check_by_each_number():
         #     print (0)
 
 def fill_by_line():
-    result = open("fill_by_line.txt", "r+")
+    # result = open("fill_by_line.txt", "r+")
     list_list_possibilities = []
     sure_choices = []
 
@@ -130,20 +186,51 @@ def fill_by_line():
         list_list_possibilities.append(list_possible_positions)
 
     for occurence in range(9):
-        result.write("\n\n\n"+"Line number "+ str(occurence+1) + "\n" )
-        sure_choices.append(["line "+ str (occurence + 1) + " ="])
+        # result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
+        sure_choices.append(["square " + str(occurence + 1) + " ="])
+        for i in range(9):
+            sure_choices[-1].append([str(i + 1) + " possibilties"])
         for line in list_list_possibilities[occurence]:
-            if len (line) == 2:
-                sure_choices[-1].append(line)
-            result.write(str(line) + "\n")
+            if len(line) == 2:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][1].append(line)
+            if len(line) == 3:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][2].append(line)
+            if len(line) == 4:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][3].append(line)
+            if len(line) == 5:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][4].append(line)
+            if len(line) == 6:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][5].append(line)
+            if len(line) == 7:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][6].append(line)
+            if len(line) == 8:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][7].append(line)
+            if len(line) == 9:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][8].append(line)
+            if len(line) == 10:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][9].append(line)
+
+            # else:
+            #     sure_choices[-1].append([""])
+            # result.write(str(line) + "\n")
     return sure_choices
+    # for occurence in range (9):
 
 
 
     # for list in list_possibilities:
     #     result.write(str(list) + "\n")
 def fill_by_column():
-    result = open("fill_by_column.txt", "r+")
+    # result = open("fill_by_column.txt", "r+")
     list_list_possibilities = []
     sure_choices = []
 
@@ -168,16 +255,112 @@ def fill_by_column():
         list_list_possibilities.append(list_possible_positions)
 
     for occurence in range(9):
-        result.write("\n\n\n" + "Column number " + str(occurence + 1) + "\n")
-        sure_choices.append(["Column "+ str (occurence + 1) + " ="])
+        # result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
+        sure_choices.append(["square " + str(occurence + 1) + " ="])
+        for i in range(9):
+            sure_choices[-1].append([str(i + 1) + " possibilties"])
         for line in list_list_possibilities[occurence]:
-            if len (line) == 2:
-                sure_choices[-1].append(line)
-            result.write(str(line) + "\n")
+            if len(line) == 2:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][1].append(line)
+            if len(line) == 3:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][2].append(line)
+            if len(line) == 4:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][3].append(line)
+            if len(line) == 5:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][4].append(line)
+            if len(line) == 6:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][5].append(line)
+            if len(line) == 7:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][6].append(line)
+            if len(line) == 8:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][7].append(line)
+            if len(line) == 9:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][8].append(line)
+            if len(line) == 10:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][9].append(line)
+
+            # else:
+            #     sure_choices[-1].append([""])
+            # result.write(str(line) + "\n")
     return sure_choices
+    # for occurence in range (9):
+
+def fill_by_column():
+    # result = open("fill_by_column.txt", "r+")
+    list_list_possibilities = []
+    sure_choices = []
+
+    # we first choose a number between 1 and 9
+    for column in range(9):
+        list_possible_positions = []
+        for number in range(1, 10):
+            list_possible_positions.append([str(number) + " ="])
+            # then we choose a line and do an action for each column in that line
+            for line in range(9):
+                square = int(line / 3) * 3 + int(column / 3)
+                if (default_board[line][column] == 0):
+                    if (not check_if_number_in_column(number, column)):
+                        if (not check_if_number_in_line(number, line) and not check_if_number_in_square(number,
+                                                                                                            square)):
+                            list_possible_positions[-1].append((line+1,column+1))
+
+                else:
+                    if (default_board[line][column] == number):
+                        # list_possible_positions[-1].append (str(line+1) + " ,"+ str(column+1))
+                        list_possible_positions.pop()
+        list_list_possibilities.append(list_possible_positions)
+
+    for occurence in range(9):
+        # result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
+        sure_choices.append(["square " + str(occurence + 1) + " ="])
+        for i in range(9):
+            sure_choices[-1].append([str(i + 1) + " possibilties"])
+        for line in list_list_possibilities[occurence]:
+            if len(line) == 2:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][1].append(line)
+            if len(line) == 3:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][2].append(line)
+            if len(line) == 4:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][3].append(line)
+            if len(line) == 5:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][4].append(line)
+            if len(line) == 6:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][5].append(line)
+            if len(line) == 7:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][6].append(line)
+            if len(line) == 8:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][7].append(line)
+            if len(line) == 9:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][8].append(line)
+            if len(line) == 10:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][9].append(line)
+
+            # else:
+            #     sure_choices[-1].append([""])
+            # result.write(str(line) + "\n")
+    return sure_choices
+    # for occurence in range (9):
 
 def fill_by_square():
-    result = open("fill_by_square.txt", "r+")
+    # result = open("fill_by_square.txt", "r+")
     list_list_possibilities = []
     sure_choices = []
 
@@ -205,25 +388,54 @@ def fill_by_square():
         list_list_possibilities.append(list_possible_positions)
 
     for occurence in range(9):
-        result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
+        # result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
         sure_choices.append(["square "+ str (occurence + 1) + " ="])
+        for i in range (9):
+            sure_choices[-1].append([str(i+1) + " possibilties"])
         for line in list_list_possibilities[occurence]:
             if len (line) == 2:
-                sure_choices[-1].append(line)
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][1].append(line)
+            if len (line) == 3:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][2].append(line)
+            if len (line) == 4:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][3].append(line)
+            if len (line) == 5:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][4].append(line)
+            if len (line) == 6:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][5].append(line)
+            if len (line) == 7:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][6].append(line)
+            if len (line) == 8:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][7].append(line)
+            if len (line) == 9:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][8].append(line)
+            if len (line) == 10:
+                # sure_choices[-1][1].append(["1 possibility"])
+                sure_choices[-1][9].append(line)
+
+
+
             # else:
             #     sure_choices[-1].append([""])
-            result.write(str(line) + "\n")
+            # result.write(str(line) + "\n")
     return sure_choices
     # for occurence in range (9):
 
 
-
-
 def main():
-    # test = fill_by_line()
-    # test = fill_by_column()
+    test = fill_by_line()
+    test = fill_by_column()
     test = fill_by_square()
     # check_by_each_number()
+    # print (test)
     for column in test:
         print (column)
 

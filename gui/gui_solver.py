@@ -44,6 +44,12 @@ PLAY = 1
 HELP_MODE = 2
 HELP = 3
 
+######################
+#     Sub States     #
+######################
+HELP_POSSIBILITIES=4
+
+
 
 selected_case=[-1,-1]
 
@@ -89,6 +95,8 @@ def game_coordinates_to_data(x, y):
 
         else:
             return [2,0,0]
+    elif(current_state == HELP_POSSIBILITIES):
+        pass
     else :
         return [-1,0,0]
 
@@ -184,7 +192,7 @@ def draw_frame(help_button = None):
         screen.blit(text_surface_obj, text_rect_obj)
 
         #draw the possibiities.
-
+        font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 30)
 
 
 
@@ -254,7 +262,114 @@ def draw_frame(help_button = None):
 
 
 
+def visualize_by_square(clock):
+    global selected_case
+    results = fill_by_square()
+    no_possibility = True
+    for square in results:
+        if (len (square[1] )> 1):
+            no_possibility = False
+    while(not no_possibility):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        for list in results:
+            if (len(list[1]) > 1):
+                for i in range (1, len (list[1])):
+                    selected_case[0] = list[1][i][1][0]
+                    selected_case[1] = list[1][i][1][1]
+                    print (selected_case)
+                    time.sleep(0.04)
+                    draw_frame()
+                    pygame.display.flip()
+                    # print (int(list[1][i][0][0]))
+                    default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
+                    time.sleep(0.07)
+                    draw_frame()
+                    pygame.display.flip()
 
+
+        results = fill_by_square()
+        no_possibility = True
+        for square in results:
+            if (len(square[1]) > 1):
+                no_possibility = False
+        pygame.display.flip()
+        print( "loop finished square")
+        clock.tick(60)
+
+
+def visualize_by_column(clock):
+    global selected_case
+    results = fill_by_column()
+    no_possibility = True
+    for square in results:
+        if (len (square[1] )> 1):
+            no_possibility = False
+    while(not no_possibility):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        for list in results:
+            if (len(list[1]) > 1):
+                for i in range (1, len (list[1])):
+                    selected_case[0] = list[1][i][1][0]
+                    selected_case[1] = list[1][i][1][1]
+                    print (selected_case)
+                    time.sleep(0.1)
+                    draw_frame()
+                    pygame.display.flip()
+                    # print (int(list[1][i][0][0]))
+                    default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
+                    time.sleep(0.1)
+                    draw_frame()
+                    pygame.display.flip()
+
+
+        results = fill_by_column()
+        no_possibility = True
+        for square in results:
+            if (len(square[1]) > 1):
+                no_possibility = False
+        pygame.display.flip()
+        print( "loop finished column")
+        clock.tick(60)
+
+def visualize_by_line(clock):
+    global selected_case
+    results = fill_by_line()
+    no_possibility = True
+    for square in results:
+        if (len (square[1] )> 1):
+            no_possibility = False
+    while(not no_possibility):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+        for list in results:
+            if (len(list[1]) > 1):
+                for i in range (1, len (list[1])):
+                    selected_case[0] = list[1][i][1][0]
+                    selected_case[1] = list[1][i][1][1]
+                    print (selected_case)
+                    time.sleep(0.1)
+                    draw_frame()
+                    pygame.display.flip()
+                    # print (int(list[1][i][0][0]))
+                    default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
+                    time.sleep(0.1)
+                    draw_frame()
+                    pygame.display.flip()
+
+
+        results = fill_by_line()
+        no_possibility = True
+        for square in results:
+            if (len(square[1]) > 1):
+                no_possibility = False
+        pygame.display.flip()
+        print( "loop finished line")
+        clock.tick(60)
 
 define_unchangeables()
 
@@ -265,6 +380,20 @@ def main():
     done = False
     clock = pygame.time.Clock()
     moves = 0
+    # visualize_by_line(clock)
+
+    # visualize_by_square(clock)
+
+    # visualize_by_column(clock)
+
+    # visualize_by_line (clock)
+    #
+    # visualize_by_square(clock)
+    #
+    # visualize_by_column(clock)
+
+
+
     screen.fill(WHITE)
     draw_frame()
     while (not done):
@@ -283,9 +412,9 @@ def main():
                 if event.button == 1:
                     position = pygame.mouse.get_pos()
                     data = game_coordinates_to_data(position[0], position[1])
-                    print (data)
+                    # print (data)
                     if(data[0] == 1):
-                        print(default[data[1]-1][data[2]-1])
+                        # print(default[data[1]-1][data[2]-1])
                         # for line in default:
                         #     print(line)
 
@@ -298,11 +427,29 @@ def main():
                             selected_case = [-1, -1]
                             # pass
                     elif (data [0] == 2):
-                        current_state = HELP_MODE
+                        # current_state = HELP_MODE
+                        # visualize_by_line(clock)
+
+                        visualize_by_square(clock)
+
+                        # visualize_by_column(clock)
+
+                        visualize_by_line(clock)
+
+                        visualize_by_square(clock)
+
+                        visualize_by_column(clock)
+
                     elif (data[0] == 3):
                         if (not (data[1] == 0 and data[2] == 0)):
                             if (default[data[1] - 1][data[2] - 1] == 0):
                                 selected_case = [data[1], data[2]]
+                                by_c= fill_by_column()
+                                by_l= fill_by_line()
+                                by_s= fill_by_square()
+                                print("by line = "+ str (by_l[selected_case[0]-1][selected_case[1]-1]))
+                                print("by column = "+ str (by_c[selected_case[0]-1][selected_case[1]-1]))
+                                print("by square = "+ str (by_s[selected_case[0]-1][selected_case[1]-1]))
                             else:
                                 selected_case = [-1, -1]
                         else:
@@ -316,7 +463,7 @@ def main():
         pygame.display.flip()
         clock.tick(60)
 
-    pygame.quit()
+    # pygame.quit()
 
 
 if __name__ == '__main__':

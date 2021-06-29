@@ -1,5 +1,5 @@
-import pygame
 import os
+import pygame
 import time
 ######################
 # Define some colors #
@@ -24,10 +24,10 @@ def get_image(path):
         _image_library[path] = image
     return image
 
-def fill_sprites():
-    for i in range (1,10):
-        walk_sprites.append(get_image("Sprites/"+str(i)+".png"))
-    # for j in range (1,9):
-    #     jump_sprites.append(get_image("Sprites/JUMPING"+str(j)+"j.png"))
+
+def main():
+    pass
+if __name__ == "__main__":
+    main()
 
 
