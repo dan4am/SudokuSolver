@@ -1,11 +1,17 @@
 import sys
+import os
 sys.path.append("..")
 from src.image_processing import *
 from src.solver import *
 from ppadb.client import Client
+import time
+
+
 
 def connect_device():
+    os.system("adb start-server")
     adb = Client(host='127.0.0.1',port=5037)
+    adb.remote_connect("192.168.1.19", 5555)
     devices = adb.devices()
     # print(devices)
     if len(devices) == 0:
@@ -13,16 +19,46 @@ def connect_device():
         quit()
     return devices[0]
 
+def disconnect_device():
+    adb = Client(host='127.0.0.1',port=5037)
+    adb.remote_disconnect()
+    os.system("adb kill-server")
+
+events=["sendevent  /dev/input/event4 3 58 5",
+        "sendevent  /dev/input/event4 3 53 ",#1
+        "sendevent  /dev/input/event4 3 54 ",#2
+        "sendevent /dev/input/event4 3 330 1",
+        "sendevent  /dev/input/event4 0 0 0",
+        "sendevent  /dev/input/event4 0 2 0",
+        "sendevent  /dev/input/event4 0 0 0"]
 
 def take_screenshot(device):
     image = device.screencap()
     with open('../gui/screen1.png', 'wb') as f:
         f.write(image)
-    # return image
+
+
 def tap(device,x,y):
     x1 = top_left_x+ (thickness * x) + (width * (x-1)) + 4
     y1 = top_left_y + (thickness * y) + (height*(y-1)) + 4
-    device.shell('input tap ' + str(x1)+" "+ str(y1))
+    device.shell('input tap ' + str(x1)+" "+ str(y1) )
+    # for i in range(len(events)):
+    #     command = events[i]
+    #     if (i == 1 or i == 8):
+    #         command = command + str(x1)
+    #     if (i == 2 or i == 9):
+    #         command = command + str(y1)
+    #     device.shell(command)
+    #
+
+def test(device, x, y):
+    for i in range(len(events)):
+        command = events[i]
+        if (i == 1 or i == 8):
+            command = command + str(x)
+        if (i == 2 or i == 9):
+            command = command + str(y)
+        device.shell(command)
 
 def select_number(device, number):
     x = (number-1) % 3 + 1
@@ -32,6 +68,14 @@ def select_number(device, number):
     y1 = selector_top_left_y + (selector_centering * y) + (selector_height*(y-1)) + 4
 
     device.shell('input tap ' + str(x1) + " " + str(y1))
+    #
+    # for i in range(len(events)):
+    #     command = events[i]
+    #     if (i == 1 or i == 8):
+    #         command = command + str(x1)
+    #     if (i == 2 or i == 9):
+    #         command = command + str(y1)
+    #     device.shell(command)
 
 def solve_by_column(device):
 
@@ -53,9 +97,6 @@ def solve_by_column(device):
                     number = int(list[1][i][0][0])
 
                     print(str(x) + "," + str(y)+" : "+str(number))
-
-                    for line in default_board:
-                        print(line)
                     tap(device, y, x)
                     select_number(device,number)
 
@@ -89,7 +130,9 @@ def solve_by_square(device):
 
                     print(str(x) + "," + str(y)+" : "+str(number))
                     tap(device, y, x)
+                    time.sleep(0.1)
                     select_number(device,number)
+                    time.sleep(0.1)
 
 
         results = fill_by_square()
@@ -138,11 +181,8 @@ def main():
 
     device = connect_device()
     take_screenshot(device)
-    # device.shell('input tap 600 455')
     img = read_img_bw('../gui/screen1.png')
     array = from_img_to_array(img)
-    # for line in array:
-    #     print (line)
     copy_board(array)
     solve_by_column(device)
     solve_by_square(device)
@@ -151,9 +191,8 @@ def main():
     solve_by_square(device)
     solve_by_line(device)
 
-    # select_number(device,1)
-    # cv2.imshow("window_name", img)
-    # cv2.waitKey(0)
+    disconnect_device()
+
 
 if __name__ == '__main__':
     main()

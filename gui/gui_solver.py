@@ -5,6 +5,8 @@ import sys
 sys.path.append("..")
 from src.solver import *
 from gui.util import *
+from src.android_solver import connect_device,take_screenshot
+from src.image_processing import *
 
 ######################
 # Define some colors #
@@ -51,7 +53,20 @@ HELP_POSSIBILITIES=4
 
 
 
+
+
+
 selected_case=[-1,-1]
+
+
+
+device = connect_device()
+take_screenshot(device)
+img = read_img_bw('../gui/screen1.png')
+array = from_img_to_array(img)
+copy_board(array)
+
+
 
 pygame.init()
 size = (900,600)
@@ -377,6 +392,9 @@ define_unchangeables()
 
 def main():
     global selected_case,current_state
+
+
+
     done = False
     clock = pygame.time.Clock()
     moves = 0
