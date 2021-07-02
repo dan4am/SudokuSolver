@@ -5,7 +5,7 @@ import sys
 sys.path.append("..")
 from src.solver import *
 from gui.util import *
-from src.android_solver import connect_device,take_screenshot
+from src.android_solver import connect_device,disconnect_device,take_screenshot
 from src.image_processing import *
 
 ######################
@@ -51,26 +51,15 @@ HELP = 3
 ######################
 HELP_POSSIBILITIES=4
 
-
-
-
+# screen = []
 
 
 selected_case=[-1,-1]
 
 
-
-device = connect_device()
-take_screenshot(device)
-img = read_img_bw('../gui/screen1.png')
-array = from_img_to_array(img)
-copy_board(array)
-
-
-
-pygame.init()
-size = (900,600)
-screen = pygame.display.set_mode(size)
+# pygame.init()
+# size = (900,600)
+# screen = pygame.display.set_mode(size)
 
 
 
@@ -167,7 +156,7 @@ def key_selection(test, event,selected_case):
 
 
 
-def draw_frame(help_button = None):
+def draw_frame(screen, help_button = None):
     global size, help_mode_button
     # pygame.draw.line(screen, BLACK, [100, 100], [500, 100], 1)
     # pygame.draw.line(screen, BLACK, [100, 100], [100, 500], 1)
@@ -180,7 +169,10 @@ def draw_frame(help_button = None):
 
         if(help_button):
             pygame.draw.rect(screen, BLACK, pygame.Rect(help_mode_button[0], help_mode_button[1], 205, 70))
-            font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
+            if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+                font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
+            else:
+                font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
             text_surface_obj = font_obj.render("help mode", True, WHITE)
             text_rect_obj = text_surface_obj.get_rect()
             text_rect_obj.center = (help_mode_button[0] + 102, help_mode_button[1] + 35)
@@ -188,7 +180,10 @@ def draw_frame(help_button = None):
 
         else:
             pygame.draw.rect(screen, BLACK, pygame.Rect(help_mode_button[0], help_mode_button[1], 205, 70),2)
-            font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
+            if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+                font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
+            else:
+                font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
             text_surface_obj = font_obj.render("help mode", True, BLACK)
             text_rect_obj = text_surface_obj.get_rect()
             text_rect_obj.center = (help_mode_button[0] + 102, help_mode_button[1] + 35)
@@ -245,7 +240,10 @@ def draw_frame(help_button = None):
                              [frame_up_left_corner[0] + 50 * column, frame_up_left_corner[1] + frame_height], 1)
 
     # fill the board
-    font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 25)
+    if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+        font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 25)
+    else:
+        font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 25)
     for line in range (9):
 
         for column in range (9):
@@ -277,7 +275,7 @@ def draw_frame(help_button = None):
 
 
 
-def visualize_by_square(clock):
+def visualize_by_square(screen,clock):
     global selected_case
     results = fill_by_square()
     no_possibility = True
@@ -295,12 +293,12 @@ def visualize_by_square(clock):
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
                     time.sleep(0.04)
-                    draw_frame()
+                    draw_frame(screen)
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
                     time.sleep(0.07)
-                    draw_frame()
+                    draw_frame(screen)
                     pygame.display.flip()
 
 
@@ -314,7 +312,7 @@ def visualize_by_square(clock):
         clock.tick(60)
 
 
-def visualize_by_column(clock):
+def visualize_by_column(screen, clock):
     global selected_case
     results = fill_by_column()
     no_possibility = True
@@ -332,12 +330,12 @@ def visualize_by_column(clock):
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
                     time.sleep(0.1)
-                    draw_frame()
+                    draw_frame(screen)
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
                     time.sleep(0.1)
-                    draw_frame()
+                    draw_frame(screen)
                     pygame.display.flip()
 
 
@@ -350,7 +348,7 @@ def visualize_by_column(clock):
         print( "loop finished column")
         clock.tick(60)
 
-def visualize_by_line(clock):
+def visualize_by_line(screen, clock):
     global selected_case
     results = fill_by_line()
     no_possibility = True
@@ -368,12 +366,12 @@ def visualize_by_line(clock):
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
                     time.sleep(0.1)
-                    draw_frame()
+                    draw_frame(screen)
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
                     time.sleep(0.1)
-                    draw_frame()
+                    draw_frame(screen)
                     pygame.display.flip()
 
 
@@ -386,42 +384,41 @@ def visualize_by_line(clock):
         print( "loop finished line")
         clock.tick(60)
 
-define_unchangeables()
 
 
+def launch_gui(android = None):
+    global selected_case, current_state
+    if android:
+        device = connect_device()
+        take_screenshot(device)
+        if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+            img = read_img_bw('gui/screen1.png')
+        else:
+            img = read_img_bw('../gui/screen1.png')
+        array = from_img_to_array(img)
+        copy_board(array)
 
-def main():
-    global selected_case,current_state
+    pygame.init()
+    size = (900, 600)
+    screen = pygame.display.set_mode(size)
+    define_unchangeables()
 
 
 
     done = False
     clock = pygame.time.Clock()
     moves = 0
-    # visualize_by_line(clock)
-
-    # visualize_by_square(clock)
-
-    # visualize_by_column(clock)
-
-    # visualize_by_line (clock)
-    #
-    # visualize_by_square(clock)
-    #
-    # visualize_by_column(clock)
-
-
 
     screen.fill(WHITE)
-    draw_frame()
+    draw_frame(screen)
     while (not done):
         position = pygame.mouse.get_pos()
 
         if(position[0] >= help_mode_button[0] and position[0] <= help_mode_button[0] + 205 and
                 position[1] >= help_mode_button[1] and position[1] <= help_mode_button[1] + 70 ):
-            draw_frame(help_button=1)
+            draw_frame(screen,help_button=1)
         else:
-            draw_frame()
+            draw_frame(screen)
         pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -448,15 +445,15 @@ def main():
                         # current_state = HELP_MODE
                         # visualize_by_line(clock)
 
-                        visualize_by_square(clock)
+                        visualize_by_square(screen,clock)
 
                         # visualize_by_column(clock)
 
-                        visualize_by_line(clock)
+                        visualize_by_line(screen,clock)
 
-                        visualize_by_square(clock)
+                        visualize_by_square(screen,clock)
 
-                        visualize_by_column(clock)
+                        visualize_by_column(screen,clock)
 
                     elif (data[0] == 3):
                         if (not (data[1] == 0 and data[2] == 0)):
@@ -481,8 +478,15 @@ def main():
         pygame.display.flip()
         clock.tick(60)
 
-    # pygame.quit()
+    if android:
+        disconnect_device()
+    pygame.quit()
+    # quit()
 
+
+
+def main():
+    launch_gui()
 
 if __name__ == '__main__':
     main()

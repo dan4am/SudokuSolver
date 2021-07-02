@@ -6,12 +6,19 @@ from src.solver import *
 from ppadb.client import Client
 import time
 
+ip = "192.168.1.19"
+
+def set_ip(ip_str):
+    global ip
+    ip = ip_str
 
 
 def connect_device():
+    os.system("adb kill-server")
+    time.sleep(0.05)
     os.system("adb start-server")
     adb = Client(host='127.0.0.1',port=5037)
-    adb.remote_connect("192.168.1.19", 5555)
+    adb.remote_connect(ip, 5555)
     devices = adb.devices()
     # print(devices)
     if len(devices) == 0:
@@ -34,8 +41,12 @@ events=["sendevent  /dev/input/event4 3 58 5",
 
 def take_screenshot(device):
     image = device.screencap()
-    with open('../gui/screen1.png', 'wb') as f:
-        f.write(image)
+    if (sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver"):
+        with open('gui/screen1.png', 'wb') as f:
+            f.write(image)
+    else:
+        with open('../gui/screen1.png', 'wb') as f:
+            f.write(image)
 
 
 def tap(device,x,y):
@@ -175,13 +186,13 @@ def solve_by_line(device):
 
 
 
-
-
-def main():
-
+def launch():
     device = connect_device()
     take_screenshot(device)
-    img = read_img_bw('../gui/screen1.png')
+    if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+        img = read_img_bw('gui/screen1.png')
+    else:
+        img = read_img_bw('../gui/screen1.png')
     array = from_img_to_array(img)
     copy_board(array)
     solve_by_column(device)
@@ -194,5 +205,8 @@ def main():
     disconnect_device()
 
 
+def main():
+    launch()
+    # print(sys.path[0])
 if __name__ == '__main__':
     main()
