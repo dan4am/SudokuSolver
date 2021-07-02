@@ -1,6 +1,7 @@
 import os
+
 import pygame
-import time
+
 ######################
 # Define some colors #
 ######################

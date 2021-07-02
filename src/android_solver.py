@@ -1,5 +1,6 @@
-import sys
 import os
+import sys
+
 sys.path.append("..")
 from src.image_processing import *
 from src.solver import *
