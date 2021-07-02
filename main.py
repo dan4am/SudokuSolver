@@ -10,23 +10,26 @@ widgets_entry_ip=[]
 device_connection_choice=[]
 
 def thread_android_solver():
-    threading.Thread(target=launch).start()
+    def launch_from_root():
+        launch(path_root=1)
+    threading.Thread(target=launch_from_root()).start()
 
 
 def thread_gui_solver(root):
     if len (device_connection_choice) != 0:
         for widget in device_connection_choice:
             widget.destroy()
-
+    def from_device():
+        launch_gui(root_path=1)
     root.geometry("300x200")
-    t1 = threading.Thread(target=launch_gui)
+    t1 = threading.Thread(target=from_device())
     t1.daemon = True
     t1.start()
     # t1.join()
 
 def thread_gui_solver_from_device():
     def from_device():
-        launch_gui(android=1)
+        launch_gui(android=1,root_path=1)
 
     t1 = threading.Thread(target=from_device)
     t1.daemon = True
@@ -45,6 +48,7 @@ def entry_ip(root, choice,for_gui_or_cli):
         ip = Label (root,justify = LEFT, text = "Set IP address",bg = "white")
         ip_entry = Entry(root,justify = LEFT,textvariable = a)
         ip_entry.focus()
+        ip_entry.insert(0,"192.168.1.19")
 
         button_start = Button(root, text="Start", command = lambda : save_ip(root, ip_entry,for_gui_or_cli))
         ip_entry.bind('<Return>', lambda event,root = root,ip_entry = ip_entry, choice = for_gui_or_cli : save_ip(root, ip_entry,choice))

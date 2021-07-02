@@ -40,9 +40,9 @@ events=["sendevent  /dev/input/event4 3 58 5",
         "sendevent  /dev/input/event4 0 2 0",
         "sendevent  /dev/input/event4 0 0 0"]
 
-def take_screenshot(device):
+def take_screenshot(device,path_root=None):
     image = device.screencap()
-    if (sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver"):
+    if path_root:
         with open('gui/screen1.png', 'wb') as f:
             f.write(image)
     else:
@@ -187,13 +187,17 @@ def solve_by_line(device):
 
 
 
-def launch():
+def launch(path_root = None):
     device = connect_device()
-    take_screenshot(device)
-    if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+
+
+    if path_root:
+        take_screenshot(device, path_root=1)
         img = read_img_bw('gui/screen1.png')
     else:
+        take_screenshot(device)
         img = read_img_bw('../gui/screen1.png')
+
     array = from_img_to_array(img)
     copy_board(array)
     solve_by_column(device)

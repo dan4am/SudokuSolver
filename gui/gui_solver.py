@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 from src.solver import *
 from gui.util import *
-from src.android_solver import connect_device,disconnect_device,take_screenshot
+from src.android_solver import connect_device,disconnect_device,take_screenshot,tap,select_number
 from src.image_processing import *
 
 ######################
@@ -103,50 +103,95 @@ def game_coordinates_to_data(x, y):
     else :
         return [-1,0,0]
 
-def key_selection(test, event,selected_case):
+def key_selection(test, event,selected_case, android = None,device = None):
     global current_state
     if event.key == pygame.K_RIGHT:
         pass
     elif event.key == pygame.K_KP1:
         test[selected_case[0] - 1][selected_case[1] - 1] = 1
+        if android:
+            select_number(device, 1)
     elif event.key == pygame.K_KP2:
         test[selected_case[0] - 1][selected_case[1] - 1] = 2
+        if android:
+            select_number(device, 2)
     elif event.key == pygame.K_KP3:
         test[selected_case[0] - 1][selected_case[1] - 1] = 3
+        if android:
+            select_number(device, 3)
     elif event.key == pygame.K_KP4:
         test[selected_case[0] - 1][selected_case[1] - 1] = 4
+        if android:
+            select_number(device, 4)
     elif event.key == pygame.K_KP5:
         test[selected_case[0] - 1][selected_case[1] - 1] = 5
+        if android:
+            select_number(device, 5)
     elif event.key == pygame.K_KP6:
         test[selected_case[0] - 1][selected_case[1] - 1] = 6
+        if android:
+            select_number(device, 6)
     elif event.key == pygame.K_KP7:
         test[selected_case[0] - 1][selected_case[1] - 1] = 7
+        if android:
+            select_number(device, 7)
     elif event.key == pygame.K_KP8:
         test[selected_case[0] - 1][selected_case[1] - 1] = 8
+        if android:
+            select_number(device, 8)
     elif event.key == pygame.K_KP9:
         test[selected_case[0] - 1][selected_case[1] - 1] = 9
+        if android:
+            select_number(device, 9)
     elif event.key == pygame.K_KP0:
+        temp = test[selected_case[0] - 1][selected_case[1] - 1]
         test[selected_case[0] - 1][selected_case[1] - 1] = 0
+        if android:
+            select_number(device,temp)
     elif event.key == pygame.K_1:
         test[selected_case[0] - 1][selected_case[1] - 1] = 1
+        if android:
+            select_number(device, 1)
     elif event.key == pygame.K_2:
         test[selected_case[0] - 1][selected_case[1] - 1] = 2
+        if android:
+            select_number(device, 2)
+
     elif event.key == pygame.K_3:
         test[selected_case[0] - 1][selected_case[1] - 1] = 3
+        if android:
+            select_number(device, 3)
     elif event.key == pygame.K_4:
         test[selected_case[0] - 1][selected_case[1] - 1] = 4
+        if android:
+            select_number(device, 4)
+
     elif event.key == pygame.K_5:
         test[selected_case[0] - 1][selected_case[1] - 1] = 5
+        if android:
+            select_number(device, 5)
+
     elif event.key == pygame.K_6:
         test[selected_case[0] - 1][selected_case[1] - 1] = 6
+        if android:
+            select_number(device, 6)
+
     elif event.key == pygame.K_7:
         test[selected_case[0] - 1][selected_case[1] - 1] = 7
+        if android:
+            select_number(device, 7)
     elif event.key == pygame.K_8:
         test[selected_case[0] - 1][selected_case[1] - 1] = 8
+        if android:
+            select_number(device, 8)
     elif event.key == pygame.K_9:
         test[selected_case[0] - 1][selected_case[1] - 1] = 9
+        if android:
+            select_number(device, 9)
     elif event.key == pygame.K_0:
         test[selected_case[0] - 1][selected_case[1] - 1] = 0
+        if android:
+            select_number(device,test[selected_case[0] - 1][selected_case[1] - 1] )
     elif event.key == pygame.K_ESCAPE:
         test[selected_case[0] - 1][selected_case[1] - 1] = 0
     elif event.key == pygame.K_g:
@@ -155,7 +200,7 @@ def key_selection(test, event,selected_case):
 
 
 
-def draw_frame(screen, help_button = None):
+def draw_frame(screen, help_button = None,root_path = None):
     global size, help_mode_button
     # pygame.draw.line(screen, BLACK, [100, 100], [500, 100], 1)
     # pygame.draw.line(screen, BLACK, [100, 100], [100, 500], 1)
@@ -168,7 +213,7 @@ def draw_frame(screen, help_button = None):
 
         if(help_button):
             pygame.draw.rect(screen, BLACK, pygame.Rect(help_mode_button[0], help_mode_button[1], 205, 70))
-            if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+            if root_path:
                 font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
             else:
                 font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
@@ -179,7 +224,7 @@ def draw_frame(screen, help_button = None):
 
         else:
             pygame.draw.rect(screen, BLACK, pygame.Rect(help_mode_button[0], help_mode_button[1], 205, 70),2)
-            if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+            if root_path:
                 font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
             else:
                 font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
@@ -194,7 +239,10 @@ def draw_frame(screen, help_button = None):
 
         #draw the banner of help mode
         pygame.draw.rect(screen, BLACK, pygame.Rect(help_mode_banner[0], help_mode_banner[1], 299, 30), 2)
-        font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 30)
+        if root_path:
+            font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 30)
+        else:
+            font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 30)
         text_surface_obj = font_obj.render("help mode", True, BLACK)
         text_rect_obj = text_surface_obj.get_rect()
         text_rect_obj.center = (help_mode_banner[0] + 150, help_mode_banner[1] + 14)
@@ -239,7 +287,7 @@ def draw_frame(screen, help_button = None):
                              [frame_up_left_corner[0] + 50 * column, frame_up_left_corner[1] + frame_height], 1)
 
     # fill the board
-    if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+    if root_path:
         font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 25)
     else:
         font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 25)
@@ -274,7 +322,7 @@ def draw_frame(screen, help_button = None):
 
 
 
-def visualize_by_square(screen,clock):
+def visualize_by_square(screen,clock,root_path =None):
     global selected_case
     results = fill_by_square()
     no_possibility = True
@@ -292,12 +340,19 @@ def visualize_by_square(screen,clock):
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
                     time.sleep(0.04)
-                    draw_frame(screen)
+                    if root_path:
+                        draw_frame(screen, root_path=1)
+                    else:
+                        draw_frame(screen)
+
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
                     time.sleep(0.07)
-                    draw_frame(screen)
+                    if root_path:
+                        draw_frame(screen, root_path=1)
+                    else:
+                        draw_frame(screen)
                     pygame.display.flip()
 
 
@@ -311,7 +366,7 @@ def visualize_by_square(screen,clock):
         clock.tick(60)
 
 
-def visualize_by_column(screen, clock):
+def visualize_by_column(screen, clock,root_path = None):
     global selected_case
     results = fill_by_column()
     no_possibility = True
@@ -329,12 +384,18 @@ def visualize_by_column(screen, clock):
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
                     time.sleep(0.1)
-                    draw_frame(screen)
+                    if root_path:
+                        draw_frame(screen, root_path=1)
+                    else:
+                        draw_frame(screen)
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
                     time.sleep(0.1)
-                    draw_frame(screen)
+                    if root_path:
+                        draw_frame(screen, root_path=1)
+                    else:
+                        draw_frame(screen)
                     pygame.display.flip()
 
 
@@ -347,7 +408,7 @@ def visualize_by_column(screen, clock):
         print( "loop finished column")
         clock.tick(60)
 
-def visualize_by_line(screen, clock):
+def visualize_by_line(screen, clock,root_path = None):
     global selected_case
     results = fill_by_line()
     no_possibility = True
@@ -365,12 +426,18 @@ def visualize_by_line(screen, clock):
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
                     time.sleep(0.1)
-                    draw_frame(screen)
+                    if root_path:
+                        draw_frame(screen,root_path=1)
+                    else:
+                        draw_frame(screen)
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
                     time.sleep(0.1)
-                    draw_frame(screen)
+                    if root_path:
+                        draw_frame(screen, root_path=1)
+                    else:
+                        draw_frame(screen)
                     pygame.display.flip()
 
 
@@ -385,14 +452,17 @@ def visualize_by_line(screen, clock):
 
 
 
-def launch_gui(android = None):
+def launch_gui(android = None, root_path = None):
     global selected_case, current_state
+    device = None
     if android:
         device = connect_device()
-        take_screenshot(device)
-        if sys.path[0] == r"C:\Users\dan4a\PycharmProjects\SudokuSolver":
+
+        if root_path:
+            take_screenshot(device,path_root = 1)
             img = read_img_bw('gui/screen1.png')
         else:
+            take_screenshot(device)
             img = read_img_bw('../gui/screen1.png')
         array = from_img_to_array(img)
         copy_board(array)
@@ -409,15 +479,24 @@ def launch_gui(android = None):
     moves = 0
 
     screen.fill(WHITE)
-    draw_frame(screen)
+    if root_path:
+        draw_frame(screen,root_path = 1)
+    else:
+        draw_frame(screen)
     while (not done):
         position = pygame.mouse.get_pos()
 
         if(position[0] >= help_mode_button[0] and position[0] <= help_mode_button[0] + 205 and
                 position[1] >= help_mode_button[1] and position[1] <= help_mode_button[1] + 70 ):
-            draw_frame(screen,help_button=1)
+            if root_path:
+                draw_frame(screen,help_button=1, root_path=1)
+            else:
+                draw_frame(screen,help_button=1)
         else:
-            draw_frame(screen)
+            if root_path:
+                draw_frame(screen, root_path=1)
+            else:
+                draw_frame(screen)
         pygame.event.pump()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -434,7 +513,10 @@ def launch_gui(android = None):
 
                         if(not (data[1] ==0  and data[2] == 0)):
                             if(default[data[1]-1][data[2]-1] == 0  ):
+                                # if android:
+                                #     tap(device, data[2], data[1])
                                 selected_case = [data[1],data[2]]
+
                             else:
                                 selected_case = [-1, -1]
                         else:
@@ -443,16 +525,28 @@ def launch_gui(android = None):
                     elif (data [0] == 2):
                         # current_state = HELP_MODE
                         # visualize_by_line(clock)
+                        if root_path:
+                            visualize_by_square(screen, clock,root_path = 1)
 
-                        visualize_by_square(screen,clock)
+                            # visualize_by_column(clock)
 
-                        # visualize_by_column(clock)
+                            visualize_by_line(screen, clock,root_path = 1)
 
-                        visualize_by_line(screen,clock)
+                            visualize_by_square(screen, clock,root_path = 1)
 
-                        visualize_by_square(screen,clock)
+                            visualize_by_column(screen, clock,root_path = 1)
 
-                        visualize_by_column(screen,clock)
+                        else:
+
+                            visualize_by_square(screen,clock)
+
+                            # visualize_by_column(clock)
+
+                            visualize_by_line(screen,clock)
+
+                            visualize_by_square(screen,clock)
+
+                            visualize_by_column(screen,clock)
 
                     elif (data[0] == 3):
                         if (not (data[1] == 0 and data[2] == 0)):
@@ -473,7 +567,10 @@ def launch_gui(android = None):
 
 
             elif event.type == pygame.KEYDOWN:
-                key_selection(default_board, event, selected_case)
+                # if android:
+                #     key_selection(default_board, event, selected_case,android = 1, device = device)
+                # else:
+                    key_selection(default_board, event, selected_case)
         pygame.display.flip()
         clock.tick(60)
 
