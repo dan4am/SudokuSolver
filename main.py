@@ -1,13 +1,19 @@
 import threading
 from tkinter import *
+import time
 import sys
 from gui.gui_solver import launch_gui
 from src.android_solver import launch, set_ip
 
 connexion_choice=[]
-
+end_thread=True
+list_threads = []
+list_threads_from_device = []
 widgets_entry_ip=[]
 device_connection_choice=[]
+exit_event   =  threading.Event()
+exit_event.set()
+
 
 def thread_android_solver():
     def launch_from_root():
@@ -16,24 +22,46 @@ def thread_android_solver():
 
 
 def thread_gui_solver(root):
+    global exit_event,list_threads
     if len (device_connection_choice) != 0:
         for widget in device_connection_choice:
             widget.destroy()
-    def from_device():
-        launch_gui(root_path=1)
-    root.geometry("300x200")
-    t1 = threading.Thread(target=from_device())
-    t1.daemon = True
-    t1.start()
+
+    if (len(list_threads) != 0):
+        if(not list_threads[0].is_alive()):
+            list_threads.clear()
+
+    def random_grid():
+        launch_gui(exit_event,root_path=1)
+
+    if (len(list_threads) == 0):
+        root.geometry("300x170")
+        t1 = threading.Thread(target=random_grid)
+        list_threads.append(t1)
+        t1.daemon = True
+        t1.start()
+
+
     # t1.join()
 
-def thread_gui_solver_from_device():
-    def from_device():
-        launch_gui(android=1,root_path=1)
 
-    t1 = threading.Thread(target=from_device)
-    t1.daemon = True
-    t1.start()
+def thread_gui_solver_from_device():
+    global exit_event, list_threads_from_device
+
+    if (len(list_threads_from_device) != 0):
+        if (not list_threads_from_device[0].is_alive()):
+            list_threads_from_device.clear()
+
+
+    def from_device():
+        print(len(list_threads_from_device))
+        launch_gui(exit_event,android=1,root_path=1)
+
+    if (len(list_threads_from_device) == 0):
+        t1 = threading.Thread(target=from_device)
+        t1.daemon = True
+        list_threads_from_device.append(t1)
+        t1.start()
 
 def entry_ip(root, choice,for_gui_or_cli):
     global widgets_entry_ip
@@ -67,7 +95,7 @@ def entry_ip(root, choice,for_gui_or_cli):
 
 def save_ip(root, ip_entry, choice):
     set_ip(ip_entry.get())
-    print(ip_entry.get())
+    # print(ip_entry.get())
     if choice == 1:
         thread_android_solver()
 
@@ -111,8 +139,12 @@ def android_device(root,for_gui_or_cli):
 
     root.geometry("300x280")
 
-def main():
+def exit_window():
+    end_thread = False
+    sys.exit()
 
+def launch_main():
+    global exit_event
     print(sys.path[0])
     root = Tk()
     root.configure(bg="white")
@@ -129,10 +161,18 @@ def main():
 
     root.geometry("300x170")
 
-    # root.resizable(width=False, height=False)
+    root.resizable(width=False, height=False)
+    root.protocol("exit this thread", exit_window)
 
     root.mainloop()
+    exit_event.clear()
+    sys.exit(0)
+    # end_thread = False
 
+def main():
+    main_thread =  threading.Thread(target=launch_main())
+    main_thread.daemon = True
+    main_thread.start()
 
 if __name__ == '__main__':
     main()

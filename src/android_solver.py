@@ -9,6 +9,7 @@ import time
 
 ip = "192.168.1.19"
 
+
 def set_ip(ip_str):
     global ip
     ip = ip_str

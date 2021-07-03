@@ -1,11 +1,13 @@
 import time
 import time
 import sys
+import threading
 sys.path.append("..")
 from src.solver import *
 from gui.util import *
 from src.android_solver import connect_device,disconnect_device,take_screenshot,tap,select_number
 from src.image_processing import *
+
 
 ######################
 # Define some colors #
@@ -54,6 +56,7 @@ HELP_POSSIBILITIES=4
 
 
 selected_case=[-1,-1]
+threads=[]
 
 
 # pygame.init()
@@ -322,14 +325,14 @@ def draw_frame(screen, help_button = None,root_path = None):
 
 
 
-def visualize_by_square(screen,clock,root_path =None):
+def visualize_by_square(event_th,screen,clock,root_path =None):
     global selected_case
     results = fill_by_square()
     no_possibility = True
     for square in results:
         if (len (square[1] )> 1):
             no_possibility = False
-    while(not no_possibility):
+    while((not no_possibility) and event_th.isSet()):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -348,7 +351,7 @@ def visualize_by_square(screen,clock,root_path =None):
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
-                    time.sleep(0.07)
+                    # time.sleep(0.07)
                     if root_path:
                         draw_frame(screen, root_path=1)
                     else:
@@ -366,14 +369,14 @@ def visualize_by_square(screen,clock,root_path =None):
         clock.tick(60)
 
 
-def visualize_by_column(screen, clock,root_path = None):
+def visualize_by_column(event_th,screen, clock,root_path = None):
     global selected_case
     results = fill_by_column()
     no_possibility = True
     for square in results:
         if (len (square[1] )> 1):
             no_possibility = False
-    while(not no_possibility):
+    while((not no_possibility) and event_th.isSet()):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -391,7 +394,7 @@ def visualize_by_column(screen, clock,root_path = None):
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
-                    time.sleep(0.1)
+                    # time.sleep(0.1)
                     if root_path:
                         draw_frame(screen, root_path=1)
                     else:
@@ -408,14 +411,14 @@ def visualize_by_column(screen, clock,root_path = None):
         print( "loop finished column")
         clock.tick(60)
 
-def visualize_by_line(screen, clock,root_path = None):
+def visualize_by_line(event_th,screen, clock,root_path = None):
     global selected_case
     results = fill_by_line()
     no_possibility = True
     for square in results:
         if (len (square[1] )> 1):
             no_possibility = False
-    while(not no_possibility):
+    while((not no_possibility) and event_th.isSet()):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -433,7 +436,7 @@ def visualize_by_line(screen, clock,root_path = None):
                     pygame.display.flip()
                     # print (int(list[1][i][0][0]))
                     default_board[selected_case[0]-1][selected_case[1]-1] = int(list[1][i][0][0])
-                    time.sleep(0.1)
+                    # time.sleep(0.1)
                     if root_path:
                         draw_frame(screen, root_path=1)
                     else:
@@ -452,8 +455,8 @@ def visualize_by_line(screen, clock,root_path = None):
 
 
 
-def launch_gui(android = None, root_path = None):
-    global selected_case, current_state
+def launch_gui(event_th,android = None, root_path = None ):
+    global selected_case, current_state, end_thread
     device = None
     if android:
         device = connect_device()
@@ -483,7 +486,7 @@ def launch_gui(android = None, root_path = None):
         draw_frame(screen,root_path = 1)
     else:
         draw_frame(screen)
-    while (not done):
+    while ((not done) and event_th.isSet() ):
         position = pygame.mouse.get_pos()
 
         if(position[0] >= help_mode_button[0] and position[0] <= help_mode_button[0] + 205 and
@@ -501,6 +504,8 @@ def launch_gui(android = None, root_path = None):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
+                pygame.quit()
+                sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     position = pygame.mouse.get_pos()
@@ -526,27 +531,27 @@ def launch_gui(android = None, root_path = None):
                         # current_state = HELP_MODE
                         # visualize_by_line(clock)
                         if root_path:
-                            visualize_by_square(screen, clock,root_path = 1)
+                            visualize_by_square(event_th,screen, clock,root_path = 1)
 
                             # visualize_by_column(clock)
 
-                            visualize_by_line(screen, clock,root_path = 1)
+                            visualize_by_line(event_th,screen, clock,root_path = 1)
 
-                            visualize_by_square(screen, clock,root_path = 1)
+                            visualize_by_square(event_th,screen, clock,root_path = 1)
 
-                            visualize_by_column(screen, clock,root_path = 1)
+                            visualize_by_column(event_th,screen, clock,root_path = 1)
 
                         else:
 
-                            visualize_by_square(screen,clock)
+                            visualize_by_square(event_th,screen,clock)
 
                             # visualize_by_column(clock)
 
-                            visualize_by_line(screen,clock)
+                            visualize_by_line(event_th,screen,clock)
 
-                            visualize_by_square(screen,clock)
+                            visualize_by_square(event_th,screen,clock)
 
-                            visualize_by_column(screen,clock)
+                            visualize_by_column(event_th, screen,clock)
 
                     elif (data[0] == 3):
                         if (not (data[1] == 0 and data[2] == 0)):
@@ -577,12 +582,14 @@ def launch_gui(android = None, root_path = None):
     if android:
         disconnect_device()
     pygame.quit()
-    # quit()
+    sys.exit(0)
 
 
 
 def main():
-    launch_gui()
+    rand_event  = threading.Event()
+    rand_event.set()
+    launch_gui(rand_event)
 
 if __name__ == '__main__':
     main()
