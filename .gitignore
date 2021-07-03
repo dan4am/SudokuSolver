@@ -19,12 +19,14 @@ lib64/
 parts/
 sdist/
 var/
+.idea/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.exe
 MANIFEST
 
 # PyInstaller
