@@ -455,7 +455,7 @@ def visualize_by_line(event_th,screen, clock,root_path = None):
 
 
 
-def launch_gui(event_th,android = None, root_path = None ):
+def launch_gui(event_th = True,android = None, root_path = None ):
     global selected_case, current_state, end_thread
     device = None
     if android:
@@ -473,6 +473,11 @@ def launch_gui(event_th,android = None, root_path = None ):
     pygame.init()
     size = (900, 600)
     screen = pygame.display.set_mode(size)
+
+    if root_path:
+        pygame.display.set_icon(pygame.image.load("assets/Images/icon.png"))
+    else:
+        pygame.display.set_icon(pygame.image.load("../assets/Images/icon.png"))
     define_unchangeables()
 
 

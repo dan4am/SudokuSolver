@@ -1,4 +1,5 @@
 import threading
+from multiprocessing import Process
 from tkinter import *
 import time
 import sys
@@ -7,61 +8,58 @@ from src.android_solver import launch, set_ip
 
 connexion_choice=[]
 end_thread=True
-list_threads = []
-list_threads_from_device = []
+list_processes = []
+list_processes_from_device = []
 widgets_entry_ip=[]
 device_connection_choice=[]
 exit_event   =  threading.Event()
 exit_event.set()
 
 
-def thread_android_solver():
+def process_android_solver():
     def launch_from_root():
         launch(path_root=1)
-    threading.Thread(target=launch_from_root()).start()
+    Process(target=launch_from_root()).start()
 
 
-def thread_gui_solver(root):
+def random_grid():
+    launch_gui(exit_event,root_path=1)
+
+def process_gui_solver(root):
     global exit_event,list_threads
     if len (device_connection_choice) != 0:
-        for widget in device_connection_choice:
-            widget.destroy()
+        delete(root)
 
-    if (len(list_threads) != 0):
-        if(not list_threads[0].is_alive()):
-            list_threads.clear()
+    if (len(list_processes) != 0):
+        if(not list_processes[0].is_alive()):
+            list_processes.clear()
 
-    def random_grid():
-        launch_gui(exit_event,root_path=1)
 
-    if (len(list_threads) == 0):
+    if (len(list_processes) == 0):
         root.geometry("300x170")
-        t1 = threading.Thread(target=random_grid)
-        list_threads.append(t1)
-        t1.daemon = True
-        t1.start()
+        p1 = Process(target=random_grid)
+        list_processes.append(p1)
+        p1.daemon = True
+        p1.start()
+
+def from_device():
+    print(len(list_processes_from_device))
+    launch_gui(exit_event,android=1,root_path=1)
+
+def process_gui_solver_from_device():
+    global exit_event, list_processes_from_device
+
+    if (len(list_processes_from_device) != 0):
+        if (not list_processes_from_device[0].is_alive()):
+            list_processes_from_device.clear()
 
 
-    # t1.join()
 
-
-def thread_gui_solver_from_device():
-    global exit_event, list_threads_from_device
-
-    if (len(list_threads_from_device) != 0):
-        if (not list_threads_from_device[0].is_alive()):
-            list_threads_from_device.clear()
-
-
-    def from_device():
-        print(len(list_threads_from_device))
-        launch_gui(exit_event,android=1,root_path=1)
-
-    if (len(list_threads_from_device) == 0):
-        t1 = threading.Thread(target=from_device)
-        t1.daemon = True
-        list_threads_from_device.append(t1)
-        t1.start()
+    if (len(list_processes_from_device) == 0):
+        p1 = Process(target=from_device)
+        p1.daemon = True
+        list_processes_from_device.append(p1)
+        p1.start()
 
 def entry_ip(root, choice,for_gui_or_cli):
     global widgets_entry_ip
@@ -97,24 +95,26 @@ def save_ip(root, ip_entry, choice):
     set_ip(ip_entry.get())
     # print(ip_entry.get())
     if choice == 1:
-        thread_android_solver()
+        process_android_solver()
 
     else:
-        thread_gui_solver_from_device()
+        process_gui_solver_from_device()
+
+def delete(root):
+    global  device_connection_choice
+    if len (device_connection_choice) != 0:
+        for widget in device_connection_choice:
+            widget.destroy()
+    if len(device_connection_choice) != 0:
+        for widget in widgets_entry_ip:
+            widget.destroy()
+        root.geometry("300x170")
 
 def android_device(root,for_gui_or_cli):
 
 
-    def delete():
-        global  device_connection_choice
-        if len (device_connection_choice) != 0:
-            for widget in device_connection_choice:
-                widget.destroy()
-        if len(device_connection_choice) != 0:
-            for widget in widgets_entry_ip:
-                widget.destroy()
-            root.geometry("300x170")
-    delete()
+
+    delete(root)
 
 
     choice = IntVar(root, value = -1)
@@ -139,10 +139,6 @@ def android_device(root,for_gui_or_cli):
 
     root.geometry("300x280")
 
-def exit_window():
-    end_thread = False
-    sys.exit()
-
 def launch_main():
     global exit_event
     print(sys.path[0])
@@ -151,8 +147,8 @@ def launch_main():
     root.title("Sudoku solver")
 
     # button_android_solver = Button(root,text = "Android solver",width = 30, command = threading.Thread(target=launch, daemon=True).start)
+    button_random_sudoku_grid = Button(root,text = "Random sudoku grid", width = 30,command = lambda:  process_gui_solver(root) )
     button_android_solver = Button(root,text = "Android solver",width = 30, command = lambda : android_device(root, 1))
-    button_random_sudoku_grid = Button(root,text = "Random sudoku grid", width = 30,command = lambda:  thread_gui_solver(root) )
     button_grid_from_android_device= Button(root,text = "Grid from android device", width = 30, command = lambda : android_device(root, 2))
 
     button_random_sudoku_grid.pack(pady = 10)
@@ -160,19 +156,15 @@ def launch_main():
     button_grid_from_android_device.pack(pady = 10)
 
     root.geometry("300x170")
-
+    root.iconbitmap('assets/Images/icon.ico')
     root.resizable(width=False, height=False)
-    root.protocol("exit this thread", exit_window)
-
     root.mainloop()
-    exit_event.clear()
     sys.exit(0)
-    # end_thread = False
+
 
 def main():
-    main_thread =  threading.Thread(target=launch_main())
-    main_thread.daemon = True
-    main_thread.start()
+    main_process =  threading.Thread(target=launch_main())
+    main_process.start()
 
 if __name__ == '__main__':
     main()
