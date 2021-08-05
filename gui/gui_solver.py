@@ -24,8 +24,10 @@ RED = (255, 0, 0)
 #     Buttons        #
 ######################
 
-
+clear_button=[610,175]
 help_mode_button=[610,265]
+new_grid_button=[610,355]
+
 help_mode_banner=[563,75]
 
 
@@ -90,6 +92,12 @@ def game_coordinates_to_data(x, y):
         elif (x >= help_mode_button[0] and x <= help_mode_button[0] + 205 and
                 y >= help_mode_button[1] and y <= help_mode_button[1] + 70):
             return[2, 0, 0]
+        elif (x >= clear_button[0] and x <= clear_button[0] + 205 and
+              y >= clear_button[1] and y <= clear_button[1] + 70):
+            return [5, 0, 0]
+        elif (x >= new_grid_button[0] and x <= new_grid_button[0] + 205 and
+              y >= new_grid_button[1] and y <= new_grid_button[1] + 70):
+            return [6, 0, 0]
 
         else:
             return [1,0,0]
@@ -328,7 +336,7 @@ def key_selection(test, event,selected_case,event_th, screen, clock, android = N
  ######################################start auto solving###################################
 
 
-def draw_frame(screen, help_button = None,root_path = None):
+def draw_frame(screen, help_button = None, clear = None, new_grid = None,root_path = None):
     global size, help_mode_button
     # pygame.draw.line(screen, BLACK, [100, 100], [500, 100], 1)
     # pygame.draw.line(screen, BLACK, [100, 100], [100, 500], 1)
@@ -361,7 +369,47 @@ def draw_frame(screen, help_button = None,root_path = None):
             text_rect_obj.center = (help_mode_button[0] + 102, help_mode_button[1] + 35)
             screen.blit(text_surface_obj, text_rect_obj)
 
+        if(clear):
+            pygame.draw.rect(screen, BLACK, pygame.Rect(clear_button[0], clear_button[1], 205, 70))
+            if root_path:
+                font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
+            else:
+                font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
+            text_surface_obj = font_obj.render("Clear", True, WHITE)
+            text_rect_obj = text_surface_obj.get_rect()
+            text_rect_obj.center = (clear_button[0] + 102, clear_button[1] + 35)
+            screen.blit(text_surface_obj, text_rect_obj)
+        else:
+            pygame.draw.rect(screen, BLACK, pygame.Rect(clear_button[0], clear_button[1], 205, 70), 2)
+            if root_path:
+                font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
+            else:
+                font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
+            text_surface_obj = font_obj.render("Clear", True, BLACK)
+            text_rect_obj = text_surface_obj.get_rect()
+            text_rect_obj.center = (clear_button[0] + 102, clear_button[1] + 35)
+            screen.blit(text_surface_obj, text_rect_obj)
 
+        if (new_grid):
+            pygame.draw.rect(screen, BLACK, pygame.Rect(new_grid_button[0], new_grid_button[1], 205, 70))
+            if root_path:
+                font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
+            else:
+                font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
+            text_surface_obj = font_obj.render("New Grid", True, WHITE)
+            text_rect_obj = text_surface_obj.get_rect()
+            text_rect_obj.center = (new_grid_button[0] + 102, new_grid_button[1] + 35)
+            screen.blit(text_surface_obj, text_rect_obj)
+        else:
+            pygame.draw.rect(screen, BLACK, pygame.Rect(new_grid_button[0], new_grid_button[1], 205, 70), 2)
+            if root_path:
+                font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
+            else:
+                font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
+            text_surface_obj = font_obj.render("New Grid", True, BLACK)
+            text_rect_obj = text_surface_obj.get_rect()
+            text_rect_obj.center = (new_grid_button[0] + 102, new_grid_button[1] + 35)
+            screen.blit(text_surface_obj, text_rect_obj)
 
     elif (current_state == HELP_MODE):
 
@@ -645,6 +693,20 @@ def launch_gui(event_th = True,android = None, root_path = None ):
                 draw_frame(screen,help_button=1, root_path=1)
             else:
                 draw_frame(screen,help_button=1)
+
+        elif (position[0] >= clear_button[0] and position[0] <= clear_button[0] + 205 and
+                position[1] >= clear_button[1] and position[1] <= clear_button[1] + 70):
+            if root_path:
+                draw_frame(screen, clear = 1, root_path=1)
+            else:
+                draw_frame(screen, clear = 1)
+
+        elif (position[0] >= new_grid_button[0] and position[0] <= new_grid_button[0] + 205 and
+                position[1] >= new_grid_button[1] and position[1] <= new_grid_button[1] + 70):
+            if root_path:
+                draw_frame(screen, new_grid = 1, root_path=1)
+            else:
+                draw_frame(screen, new_grid = 1)
         else:
             if root_path:
                 draw_frame(screen, root_path=1)
@@ -717,7 +779,16 @@ def launch_gui(event_th = True,android = None, root_path = None ):
                                 selected_case = [-1, -1]
                         else:
                             selected_case = [-1, -1]
-
+                    elif(data[0] == 5):
+                        clear()
+                    elif(data[0] == 6):
+                        if root_path:
+                            array = get_rand_grid(root_path=1)
+                            copy_board(array)
+                        else:
+                            array = get_rand_grid()
+                            copy_board(array)
+                        define_unchangeables()
                     # print (selected_case)
 
 
