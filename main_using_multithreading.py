@@ -123,7 +123,7 @@ def android_device(root,for_gui_or_cli):
                                   bg ="white", anchor = W,justify = LEFT)
     button_done = Button(root,text = "Done",command = lambda : entry_ip(root,choice,for_gui_or_cli))
 
-    button_cancel = Button(root,text = "cancel",command = delete)
+    button_cancel = Button(root,text = "cancel",command = lambda : delete(root))
 
     device_connection_choice.append(button_wired)
     device_connection_choice.append(button_wireless)

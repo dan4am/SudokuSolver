@@ -212,7 +212,8 @@ def fill_by_line():
                 else:
                     if (default_board[line][column] == number):
                         # list_possible_positions[-1].append (str(line+1) + " ,"+ str(column+1))
-                        list_possible_positions.pop()
+                        if (len(list_possible_positions) != 0):
+                            list_possible_positions.pop()
         list_list_possibilities.append(list_possible_positions)
 
     for occurence in range(9):
@@ -281,7 +282,8 @@ def fill_by_column():
                 else:
                     if (default_board[line][column] == number):
                         # list_possible_positions[-1].append (str(line+1) + " ,"+ str(column+1))
-                        list_possible_positions.pop()
+                        if (len(list_possible_positions) != 0):
+                            list_possible_positions.pop()
         list_list_possibilities.append(list_possible_positions)
 
     for occurence in range(9):
@@ -324,70 +326,70 @@ def fill_by_column():
     return sure_choices
     # for occurence in range (9):
 
-def fill_by_column():
-    # result = open("fill_by_column.txt", "r+")
-    list_list_possibilities = []
-    sure_choices = []
-
-    # we first choose a number between 1 and 9
-    for column in range(9):
-        list_possible_positions = []
-        for number in range(1, 10):
-            list_possible_positions.append([str(number) + " ="])
-            # then we choose a line and do an action for each column in that line
-            for line in range(9):
-                square = int(line / 3) * 3 + int(column / 3)
-                if (default_board[line][column] == 0):
-                    if (not check_if_number_in_column(number, column)):
-                        if (not check_if_number_in_line(number, line) and not check_if_number_in_square(number,
-                                                                                                            square)):
-                            list_possible_positions[-1].append((line+1,column+1))
-
-                else:
-                    if (default_board[line][column] == number):
-                        # list_possible_positions[-1].append (str(line+1) + " ,"+ str(column+1))
-                        list_possible_positions.pop()
-        list_list_possibilities.append(list_possible_positions)
-
-    for occurence in range(9):
-        # result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
-        sure_choices.append(["square " + str(occurence + 1) + " ="])
-        for i in range(9):
-            sure_choices[-1].append([str(i + 1) + " possibilties"])
-        for line in list_list_possibilities[occurence]:
-            if len(line) == 2:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][1].append(line)
-            if len(line) == 3:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][2].append(line)
-            if len(line) == 4:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][3].append(line)
-            if len(line) == 5:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][4].append(line)
-            if len(line) == 6:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][5].append(line)
-            if len(line) == 7:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][6].append(line)
-            if len(line) == 8:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][7].append(line)
-            if len(line) == 9:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][8].append(line)
-            if len(line) == 10:
-                # sure_choices[-1][1].append(["1 possibility"])
-                sure_choices[-1][9].append(line)
-
-            # else:
-            #     sure_choices[-1].append([""])
-            # result.write(str(line) + "\n")
-    return sure_choices
-    # for occurence in range (9):
+# def fill_by_column():
+#     # result = open("fill_by_column.txt", "r+")
+#     list_list_possibilities = []
+#     sure_choices = []
+#
+#     # we first choose a number between 1 and 9
+#     for column in range(9):
+#         list_possible_positions = []
+#         for number in range(1, 10):
+#             list_possible_positions.append([str(number) + " ="])
+#             # then we choose a line and do an action for each column in that line
+#             for line in range(9):
+#                 square = int(line / 3) * 3 + int(column / 3)
+#                 if (default_board[line][column] == 0):
+#                     if (not check_if_number_in_column(number, column)):
+#                         if (not check_if_number_in_line(number, line) and not check_if_number_in_square(number,
+#                                                                                                             square)):
+#                             list_possible_positions[-1].append((line+1,column+1))
+#
+#                 else:
+#                     if (default_board[line][column] == number):
+#                         # list_possible_positions[-1].append (str(line+1) + " ,"+ str(column+1))
+#                         list_possible_positions.pop()
+#         list_list_possibilities.append(list_possible_positions)
+#
+#     for occurence in range(9):
+#         # result.write("\n\n\n" + "square number " + str(occurence + 1) + "\n")
+#         sure_choices.append(["square " + str(occurence + 1) + " ="])
+#         for i in range(9):
+#             sure_choices[-1].append([str(i + 1) + " possibilties"])
+#         for line in list_list_possibilities[occurence]:
+#             if len(line) == 2:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][1].append(line)
+#             if len(line) == 3:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][2].append(line)
+#             if len(line) == 4:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][3].append(line)
+#             if len(line) == 5:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][4].append(line)
+#             if len(line) == 6:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][5].append(line)
+#             if len(line) == 7:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][6].append(line)
+#             if len(line) == 8:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][7].append(line)
+#             if len(line) == 9:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][8].append(line)
+#             if len(line) == 10:
+#                 # sure_choices[-1][1].append(["1 possibility"])
+#                 sure_choices[-1][9].append(line)
+#
+#             # else:
+#             #     sure_choices[-1].append([""])
+#             # result.write(str(line) + "\n")
+#     return sure_choices
+#     # for occurence in range (9):
 
 def fill_by_square():
     # result = open("fill_by_square.txt", "r+")
@@ -414,7 +416,8 @@ def fill_by_square():
                     else:
                         if (default_board[line][column] == number):
                             # list_possible_positions[-1].append (str(line+1) + " ,"+ str(column+1))
-                            list_possible_positions.pop()
+                            if(len(list_possible_positions) != 0):
+                                list_possible_positions.pop()
         list_list_possibilities.append(list_possible_positions)
 
     for occurence in range(9):

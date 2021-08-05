@@ -107,8 +107,9 @@ def game_coordinates_to_data(x, y):
     else :
         return [-1,0,0]
 
-def key_selection(test, event,selected_case, android = None,device = None, root_path=None):
+def key_selection(test, event,selected_case,event_th, screen, clock, android = None,device = None, root_path=None):
     global current_state
+######################################################laod a random grid###########################
     if event.key == pygame.K_r:
         if root_path:
             array = get_rand_grid(root_path=1)
@@ -117,97 +118,214 @@ def key_selection(test, event,selected_case, android = None,device = None, root_
             array = get_rand_grid()
             copy_board(array)
         define_unchangeables()
+######################################################laod a random grid###########################
+
+########################################using keyboard arrows##############################
+    elif event.key == pygame.K_LEFT:
+        if(selected_case[0] == -1 and selected_case[1] == -1):
+            selected_case[0] = 1
+            selected_case[1] = 1
+        if selected_case[1] == 1:
+            temp_case = 9
+        else:
+            temp_case = selected_case[1] - 1
+        while (default[selected_case[0]-1][temp_case - 1] == 1):
+            print ("setting")
+            if temp_case == 1:
+                temp_case = 9
+            else:
+                temp_case -= 1
+        selected_case[1]=temp_case
+
+
+    elif event.key == pygame.K_RIGHT:
+        if (selected_case[0] == -1 and selected_case[1] == -1):
+            selected_case[0] = 1
+            selected_case[1] = 1
+        if selected_case[1] == 9:
+            temp_case = 1
+        else:
+            temp_case = selected_case[1] + 1
+        while (default[selected_case[0] - 1][temp_case - 1] == 1):
+            print("setting")
+            if temp_case == 9:
+                temp_case = 1
+            else:
+                temp_case += 1
+        selected_case[1] = temp_case
+
+    elif event.key == pygame.K_UP:
+        if (selected_case[0] == -1 and selected_case[1] == -1):
+            selected_case[0] = 1
+            selected_case[1] = 1
+        if selected_case[0] == 1:
+            temp_case = 9
+        else:
+            temp_case = selected_case[0] - 1
+        while (default [temp_case - 1][selected_case[1] - 1] == 1):
+            print("setting")
+            if temp_case == 1:
+                temp_case = 9
+            else:
+                temp_case -= 1
+        selected_case[0] = temp_case
+
+
+    elif event.key == pygame.K_DOWN:
+        if (selected_case[0] == -1 and selected_case[1] == -1):
+            selected_case[0] = 1
+            selected_case[1] = 1
+        if selected_case[0] == 9:
+            temp_case = 1
+        else:
+            temp_case = selected_case[0] + 1
+        while (default[temp_case - 1][selected_case[1] - 1] == 1):
+            print("setting")
+            if temp_case == 9:
+                temp_case = 1
+            else:
+                temp_case += 1
+        selected_case[0] = temp_case
+########################################using keyboard arrows##############################
+
+########################################filling grid#######################################
     elif event.key == pygame.K_KP1:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 1
-        if android:
-            select_number(device, 1)
+        if(default[selected_case[0]-1][selected_case[1]-1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 1
+            if android:
+                select_number(device, 1)
     elif event.key == pygame.K_KP2:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 2
-        if android:
-            select_number(device, 2)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 2
+            if android:
+                select_number(device, 2)
     elif event.key == pygame.K_KP3:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 3
-        if android:
-            select_number(device, 3)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 3
+            if android:
+                select_number(device, 3)
     elif event.key == pygame.K_KP4:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 4
-        if android:
-            select_number(device, 4)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 4
+            if android:
+                select_number(device, 4)
     elif event.key == pygame.K_KP5:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 5
-        if android:
-            select_number(device, 5)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 5
+            if android:
+                select_number(device, 5)
     elif event.key == pygame.K_KP6:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 6
-        if android:
-            select_number(device, 6)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 6
+            if android:
+                select_number(device, 6)
     elif event.key == pygame.K_KP7:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 7
-        if android:
-            select_number(device, 7)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 7
+            if android:
+                select_number(device, 7)
     elif event.key == pygame.K_KP8:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 8
-        if android:
-            select_number(device, 8)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 8
+            if android:
+                select_number(device, 8)
     elif event.key == pygame.K_KP9:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 9
-        if android:
-            select_number(device, 9)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 9
+            if android:
+                select_number(device, 9)
     elif event.key == pygame.K_KP0:
-        temp = test[selected_case[0] - 1][selected_case[1] - 1]
-        test[selected_case[0] - 1][selected_case[1] - 1] = 0
-        if android:
-            select_number(device,temp)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            temp = test[selected_case[0] - 1][selected_case[1] - 1]
+            test[selected_case[0] - 1][selected_case[1] - 1] = 0
+            if android:
+                select_number(device,temp)
     elif event.key == pygame.K_1:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 1
-        if android:
-            select_number(device, 1)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 1
+            if android:
+                select_number(device, 1)
     elif event.key == pygame.K_2:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 2
-        if android:
-            select_number(device, 2)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 2
+            if android:
+                select_number(device, 2)
 
     elif event.key == pygame.K_3:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 3
-        if android:
-            select_number(device, 3)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 3
+            if android:
+                select_number(device, 3)
     elif event.key == pygame.K_4:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 4
-        if android:
-            select_number(device, 4)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 4
+            if android:
+                select_number(device, 4)
 
     elif event.key == pygame.K_5:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 5
-        if android:
-            select_number(device, 5)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 5
+            if android:
+                select_number(device, 5)
 
     elif event.key == pygame.K_6:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 6
-        if android:
-            select_number(device, 6)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 6
+            if android:
+                select_number(device, 6)
 
     elif event.key == pygame.K_7:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 7
-        if android:
-            select_number(device, 7)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 7
+            if android:
+                select_number(device, 7)
     elif event.key == pygame.K_8:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 8
-        if android:
-            select_number(device, 8)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 8
+            if android:
+                select_number(device, 8)
     elif event.key == pygame.K_9:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 9
-        if android:
-            select_number(device, 9)
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 9
+            if android:
+                select_number(device, 9)
     elif event.key == pygame.K_0:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 0
-        if android:
-            select_number(device,test[selected_case[0] - 1][selected_case[1] - 1] )
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 0
+            if android:
+                select_number(device,test[selected_case[0] - 1][selected_case[1] - 1] )
     elif event.key == pygame.K_ESCAPE:
-        test[selected_case[0] - 1][selected_case[1] - 1] = 0
-    elif event.key == pygame.K_g:
-        current_state = HELP_MODE
+        if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
+            test[selected_case[0] - 1][selected_case[1] - 1] = 0
+
+    ########################################filling grid#######################################
 
 
+    ######################################start auto solving###################################
+    elif event.key ==  pygame.K_s:
+        if root_path:
+            visualize_by_square(event_th, screen, clock, root_path=1)
+
+            # visualize_by_column(clock)
+
+            visualize_by_line(event_th, screen, clock, root_path=1)
+
+            visualize_by_square(event_th, screen, clock, root_path=1)
+
+            visualize_by_column(event_th, screen, clock, root_path=1)
+
+        else:
+
+            visualize_by_square(event_th, screen, clock)
+
+            # visualize_by_column(clock)
+
+            visualize_by_line(event_th, screen, clock)
+
+            visualize_by_square(event_th, screen, clock)
+
+            visualize_by_column(event_th, screen, clock)
+ ######################################start auto solving###################################
 
 
 def draw_frame(screen, help_button = None,root_path = None):
@@ -608,9 +726,12 @@ def launch_gui(event_th = True,android = None, root_path = None ):
                 #     key_selection(default_board, event, selected_case,android = 1, device = device)
                 # else:
                    if root_path:
-                       key_selection(default_board, event, selected_case, root_path = 1)
+                       key_selection(default_board, event, selected_case,event_th, screen, clock, root_path = 1)
+
                    else:
-                       key_selection(default_board, event, selected_case)
+                       key_selection(default_board, event, selected_case,event_th, screen, clock)
+
+
         pygame.display.flip()
         clock.tick(60)
 
