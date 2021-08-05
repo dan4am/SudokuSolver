@@ -1,5 +1,5 @@
 import threading
-from multiprocessing import Process
+import multiprocessing as mp
 from tkinter import *
 import time
 import sys
@@ -19,7 +19,7 @@ exit_event.set()
 def process_android_solver():
     def launch_from_root():
         launch(path_root=1)
-    Process(target=launch_from_root()).start()
+    mp.Process(target=launch_from_root()).start()
 
 
 def random_grid():
@@ -37,7 +37,7 @@ def process_gui_solver(root):
 
     if (len(list_processes) == 0):
         root.geometry("300x170")
-        p1 = Process(target=random_grid)
+        p1 = mp.Process(target=random_grid)
         list_processes.append(p1)
         p1.daemon = True
         p1.start()
@@ -56,7 +56,7 @@ def process_gui_solver_from_device():
 
 
     if (len(list_processes_from_device) == 0):
-        p1 = Process(target=from_device)
+        p1 = mp.Process(target=from_device)
         p1.daemon = True
         list_processes_from_device.append(p1)
         p1.start()
@@ -163,6 +163,8 @@ def launch_main():
 
 
 def main():
+    print( mp.get_all_start_methods())
+
     main_process =  threading.Thread(target=launch_main())
     main_process.start()
 

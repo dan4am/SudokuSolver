@@ -7,6 +7,7 @@ from src.solver import *
 from gui.util import *
 from src.android_solver import connect_device,disconnect_device,take_screenshot,tap,select_number
 from src.image_processing import *
+from src.read_sudoku import *
 
 
 ######################
@@ -106,10 +107,16 @@ def game_coordinates_to_data(x, y):
     else :
         return [-1,0,0]
 
-def key_selection(test, event,selected_case, android = None,device = None):
+def key_selection(test, event,selected_case, android = None,device = None, root_path=None):
     global current_state
-    if event.key == pygame.K_RIGHT:
-        pass
+    if event.key == pygame.K_r:
+        if root_path:
+            array = get_rand_grid(root_path=1)
+            copy_board(array)
+        else:
+            array = get_rand_grid()
+            copy_board(array)
+        define_unchangeables()
     elif event.key == pygame.K_KP1:
         test[selected_case[0] - 1][selected_case[1] - 1] = 1
         if android:
@@ -220,7 +227,7 @@ def draw_frame(screen, help_button = None,root_path = None):
                 font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
             else:
                 font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
-            text_surface_obj = font_obj.render("help mode", True, WHITE)
+            text_surface_obj = font_obj.render("Solve", True, WHITE)
             text_rect_obj = text_surface_obj.get_rect()
             text_rect_obj.center = (help_mode_button[0] + 102, help_mode_button[1] + 35)
             screen.blit(text_surface_obj, text_rect_obj)
@@ -231,7 +238,7 @@ def draw_frame(screen, help_button = None,root_path = None):
                 font_obj = pygame.font.Font("assets/fonts/ARLRDBD.TTF", 32)
             else:
                 font_obj = pygame.font.Font("../assets/fonts/ARLRDBD.TTF", 32)
-            text_surface_obj = font_obj.render("help mode", True, BLACK)
+            text_surface_obj = font_obj.render("Solve", True, BLACK)
             text_rect_obj = text_surface_obj.get_rect()
             text_rect_obj.center = (help_mode_button[0] + 102, help_mode_button[1] + 35)
             screen.blit(text_surface_obj, text_rect_obj)
@@ -299,7 +306,16 @@ def draw_frame(screen, help_button = None,root_path = None):
         for column in range (9):
             if(default_board[line][column] != 0):
                 # if(not (line == selected_case[0] -1 and column == selected_case[1] -1)):
-                    text_surface_obj = font_obj.render(str(default_board[line][column]), True, BLACK)
+                    if(default[line][column] == 1):
+                        text_surface_obj = font_obj.render(str(default_board[line][column]), True, BLACK)
+                    else:
+                        number_in_case = default_board[line][column]
+                        if (check_double_in_column(number_in_case, column) or check_double_in_line(number_in_case,line)
+                        or check_double_in_square(number_in_case, line, column)):
+                            text_surface_obj = font_obj.render(str(default_board[line][column]), True, RED)
+                        else:
+                            text_surface_obj = font_obj.render(str(default_board[line][column]), True, GREEN)
+                        # check_if_number_in_square(number_in_case, )
                     text_rect_obj = text_surface_obj.get_rect()
                     x = column * 50 + 25 + frame_up_left_corner[0]
                     y = line * 50 + 25 + frame_up_left_corner[1]
@@ -315,7 +331,15 @@ def draw_frame(screen, help_button = None,root_path = None):
                 pygame.draw.line(screen, BLACK, [x -25, y],
                                  [x+25,y], 49)
                 if default_board[line][column] != 0 :
-                    text_surface_obj = font_obj.render(str(default_board[line][column]), True, WHITE)
+                    if(default[line][column] == 1):
+                        text_surface_obj = font_obj.render(str(default_board[line][column]), True,WHITE)
+                    else:
+                        number_in_case = default_board[line][column]
+                        if (check_double_in_column(number_in_case, column) or check_double_in_line(number_in_case,line)
+                        or check_double_in_square(number_in_case, line, column)):
+                            text_surface_obj = font_obj.render(str(default_board[line][column]), True, RED)
+                        else:
+                            text_surface_obj = font_obj.render(str(default_board[line][column]), True, GREEN)
                     text_rect_obj = text_surface_obj.get_rect()
                     text_rect_obj.center = (x, y)
                     text_rect_obj.height = 50
@@ -476,8 +500,12 @@ def launch_gui(event_th = True,android = None, root_path = None ):
 
     if root_path:
         pygame.display.set_icon(pygame.image.load("assets/Images/icon.png"))
+        rand_array = get_rand_grid(root_path=1)
+        copy_board(rand_array)
     else:
         pygame.display.set_icon(pygame.image.load("../assets/Images/icon.png"))
+        rand_array = get_rand_grid()
+        copy_board(rand_array)
     define_unchangeables()
 
 
@@ -485,7 +513,6 @@ def launch_gui(event_th = True,android = None, root_path = None ):
     done = False
     clock = pygame.time.Clock()
     moves = 0
-
     screen.fill(WHITE)
     if root_path:
         draw_frame(screen,root_path = 1)
@@ -580,7 +607,10 @@ def launch_gui(event_th = True,android = None, root_path = None ):
                 # if android:
                 #     key_selection(default_board, event, selected_case,android = 1, device = device)
                 # else:
-                    key_selection(default_board, event, selected_case)
+                   if root_path:
+                       key_selection(default_board, event, selected_case, root_path = 1)
+                   else:
+                       key_selection(default_board, event, selected_case)
         pygame.display.flip()
         clock.tick(60)
 

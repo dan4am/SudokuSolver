@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Ibizungu/.idea/Ibizungu.iml" filepath="$PROJECT_DIR$/../Ibizungu/.idea/Ibizungu.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SudokuSolver.iml" filepath="$PROJECT_DIR$/.idea/SudokuSolver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../UI/.idea/UI.iml" filepath="$PROJECT_DIR$/../UI/.idea/UI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../animatedmovie/.idea/animatedmovie.iml" filepath="$PROJECT_DIR$/../animatedmovie/.idea/animatedmovie.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../urubugu/.idea/urubugu.iml" filepath="$PROJECT_DIR$/../urubugu/.idea/urubugu.iml" />
     </modules>
   </component>
 </project>

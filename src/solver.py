@@ -95,6 +95,8 @@ test_result = [[9, 0, 0, 4, 0, 0, 0, 0, 0],
                [4, 0, 0, 2, 0, 0, 0, 8, 0]]
 
 def define_unchangeables():
+    global default
+    default.clear()
     for line in range (9):
         default.append([])
         for column in range (9):
@@ -115,6 +117,13 @@ def check_if_number_in_line(number, line):
     for i in range (9):
         result = result or default_board[line][i] == number
     return result
+def check_double_in_line(number, line):
+    global default_board
+    count = 0
+    for i in range (9):
+        if default_board[line][i] == number:
+            count += 1
+    return count >= 2
 
 def check_if_number_in_column(number, column):
     global default_board
@@ -122,6 +131,15 @@ def check_if_number_in_column(number, column):
     for i in range (9):
         result = result or default_board[i][column] == number
     return result
+
+def check_double_in_column(number, column):
+    global default_board
+    count = 0
+    for i in range(9):
+        if default_board[i][column] == number:
+            count += 1
+    return count >= 2
+
 
 def check_if_number_in_square(number, square):
     global default_board
@@ -132,6 +150,18 @@ def check_if_number_in_square(number, square):
         for j in range(3):
             result = result or default_board[starting_line + i][starting_column + j] == number
     return result
+def check_double_in_square(number, line, column):
+    global default_board
+    square = (line //3) * 3 + (column//3)
+    starting_line = int( square/3) * 3
+    starting_column = int(square%3) * 3
+    count = 0
+    for i in range (3):
+        for j in range(3):
+            if default_board[starting_line + i][starting_column + j] == number:
+                count += 1
+    return count >= 2
+
 
 def check_by_each_number():
     list_possibilities = []
