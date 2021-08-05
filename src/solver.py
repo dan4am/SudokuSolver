@@ -111,6 +111,14 @@ def copy_board(array):
             default_board[i][j] = array[i][j]
 
 
+
+def clear():
+    for i in range(len(default)):
+        for j in range (len (default[0])):
+            if default[i][j] == 0:
+                default_board[i][j]=0
+
+
 def check_if_number_in_line(number, line):
     global default_board
     result = False

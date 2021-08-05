@@ -290,9 +290,13 @@ def key_selection(test, event,selected_case,event_th, screen, clock, android = N
             test[selected_case[0] - 1][selected_case[1] - 1] = 0
             if android:
                 select_number(device,test[selected_case[0] - 1][selected_case[1] - 1] )
-    elif event.key == pygame.K_ESCAPE:
+    elif event.key == pygame.K_DELETE:
         if (default[selected_case[0] - 1][selected_case[1] - 1] != 1):
             test[selected_case[0] - 1][selected_case[1] - 1] = 0
+            if android:
+                select_number(device,test[selected_case[0] - 1][selected_case[1] - 1] )
+    elif event.key == pygame.K_ESCAPE:
+        clear()
 
     ########################################filling grid#######################################
 
