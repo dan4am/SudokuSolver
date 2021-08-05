@@ -129,12 +129,11 @@ def key_selection(test, event,selected_case,event_th, screen, clock, android = N
             temp_case = 9
         else:
             temp_case = selected_case[1] - 1
-        while (default[selected_case[0]-1][temp_case - 1] == 1):
-            print ("setting")
-            if temp_case == 1:
-                temp_case = 9
-            else:
-                temp_case -= 1
+        # while (default[selected_case[0]-1][temp_case - 1] == 1):
+        #     if temp_case == 1:
+        #         temp_case = 9
+        #     else:
+        #         temp_case -= 1
         selected_case[1]=temp_case
 
 
@@ -146,12 +145,11 @@ def key_selection(test, event,selected_case,event_th, screen, clock, android = N
             temp_case = 1
         else:
             temp_case = selected_case[1] + 1
-        while (default[selected_case[0] - 1][temp_case - 1] == 1):
-            print("setting")
-            if temp_case == 9:
-                temp_case = 1
-            else:
-                temp_case += 1
+        # while (default[selected_case[0] - 1][temp_case - 1] == 1):
+        #     if temp_case == 9:
+        #         temp_case = 1
+        #     else:
+        #         temp_case += 1
         selected_case[1] = temp_case
 
     elif event.key == pygame.K_UP:
@@ -162,12 +160,11 @@ def key_selection(test, event,selected_case,event_th, screen, clock, android = N
             temp_case = 9
         else:
             temp_case = selected_case[0] - 1
-        while (default [temp_case - 1][selected_case[1] - 1] == 1):
-            print("setting")
-            if temp_case == 1:
-                temp_case = 9
-            else:
-                temp_case -= 1
+        # while (default [temp_case - 1][selected_case[1] - 1] == 1):
+        #     if temp_case == 1:
+        #         temp_case = 9
+        #     else:
+        #         temp_case -= 1
         selected_case[0] = temp_case
 
 
@@ -179,12 +176,11 @@ def key_selection(test, event,selected_case,event_th, screen, clock, android = N
             temp_case = 1
         else:
             temp_case = selected_case[0] + 1
-        while (default[temp_case - 1][selected_case[1] - 1] == 1):
-            print("setting")
-            if temp_case == 9:
-                temp_case = 1
-            else:
-                temp_case += 1
+        # while (default[temp_case - 1][selected_case[1] - 1] == 1):
+        #     if temp_case == 9:
+        #         temp_case = 1
+        #     else:
+        #         temp_case += 1
         selected_case[0] = temp_case
 ########################################using keyboard arrows##############################
 
