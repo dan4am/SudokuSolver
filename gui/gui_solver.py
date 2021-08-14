@@ -576,7 +576,7 @@ def visualize_by_column(event_th,screen, clock,root_path = None):
                     selected_case[0] = list[1][i][1][0]
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
-                    time.sleep(0.1)
+                    time.sleep(0.04)
                     if root_path:
                         draw_frame(screen, root_path=1)
                     else:
@@ -618,7 +618,7 @@ def visualize_by_line(event_th,screen, clock,root_path = None):
                     selected_case[0] = list[1][i][1][0]
                     selected_case[1] = list[1][i][1][1]
                     print (selected_case)
-                    time.sleep(0.1)
+                    time.sleep(0.04)
                     if root_path:
                         draw_frame(screen,root_path=1)
                     else:
@@ -659,20 +659,23 @@ def launch_gui(event_th = True,android = None, root_path = None ):
             img = read_img_bw('../gui/screen1.png')
         array = from_img_to_array(img)
         copy_board(array)
+        define_unchangeables()
+    else:
+        if root_path:
+            pygame.display.set_icon(pygame.image.load("assets/Images/icon.png"))
+            rand_array = get_rand_grid(root_path=1)
+            copy_board(rand_array)
+        else:
+            pygame.display.set_icon(pygame.image.load("../assets/Images/icon.png"))
+            rand_array = get_rand_grid()
+            copy_board(rand_array)
+        define_unchangeables()
 
     pygame.init()
     size = (900, 600)
     screen = pygame.display.set_mode(size)
 
-    if root_path:
-        pygame.display.set_icon(pygame.image.load("assets/Images/icon.png"))
-        rand_array = get_rand_grid(root_path=1)
-        copy_board(rand_array)
-    else:
-        pygame.display.set_icon(pygame.image.load("../assets/Images/icon.png"))
-        rand_array = get_rand_grid()
-        copy_board(rand_array)
-    define_unchangeables()
+
 
 
 
