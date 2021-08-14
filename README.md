@@ -33,6 +33,8 @@ this litle GUI will appear
 ## 1.1. Sudoku game + solver.
 
 The sudoku game is a classic sudoku game, each time it is launched it starts with different grid chosen in a database of over **1 million** grids.
+![image](https://user-images.githubusercontent.com/39918471/129459929-c4f90a6c-b89d-4bab-b265-78b73eae3f65.png)
+
 
 The solver algorithm is an customized iterative Crosshatching algorithm that fills x number of cases at each iteration.
 For all the empty cases of a given line, column or sub-grid of the sudoku grid, the algorithm tries each number from 1 to nine and fill the case with a number iff the number is the only possible solution.
