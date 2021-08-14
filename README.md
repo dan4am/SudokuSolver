@@ -39,11 +39,11 @@ For all the empty cases of a given line, column or sub-grid of the sudoku grid, 
 ![Crosshathing illustration.](image2.png)
 ## a. commands
 
-`esc` -> Clear the grid.
+`esc` → Clear the grid.
 
-`s` -> Launch the solver.
+`s` → Launch the solver.
 
-`r` -> Load a random grid.
+`r` → Load a random grid.
 ## 1.2. Android solver.
 
 ## 1.3. Android sudoku generator.
