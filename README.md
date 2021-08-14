@@ -53,7 +53,9 @@ For all the empty cases of a given line, column or sub-grid of the sudoku grid, 
 - [pure-python-adb 0.3.0](https://pypi.org/project/pure-python-adb/)
 - [Fassor sudoku android app](https://play.google.com/store/apps/details?id=com.fassor.android.sudoku&hl=en&gl=US)
 
-![Tkinter Sudoku Solver GUI select android solver.](image.jpg)
+
+![Tkinter Sudoku Solver GUI select android solver.](https://user-images.githubusercontent.com/39918471/129462737-374ced6e-c822-4ae9-afe6-0d10b744bf4a.png)
+
 
 This module requires the user to have [Fassor sudoku android app](https://play.google.com/store/apps/details?id=com.fassor.android.sudoku&hl=en&gl=US) installed on his android device.
 
