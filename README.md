@@ -5,7 +5,7 @@ d via# 1. Description.
 Sudoku solver is a project encompasses 3 sub-projects:
 
 1. [A sudoku game and a solver.](#11-sudoku-game--solver)
-2. [An android solver.] (#12-android-solver)
+2. [An android solver.](#12-android-solver)
 3. [A sudoku generator that reads the screen of an android device.](#13-android-sudoku-generator)
     
 ## Prerequisites
