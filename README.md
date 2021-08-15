@@ -72,7 +72,7 @@ If the device is connected via [WiFi](https://help.famoco.com/developers/dev-env
 
 ![connect with device android solver.](https://user-images.githubusercontent.com/39918471/129463236-7985421f-5fcd-4815-8f1d-0fe7e5d69549.png)
 
-If all necessary prepartions have been done, the user can push the start button. After aproximatively 30 seconds for the module to process the screenshot, the solver will start solving the sudoku grid on the users android device.
+If all necessary preparations have been done, the user can push the start button. After aproximatively 30 seconds, the solver will start solving the sudoku grid on the users android device.
 ## 1.3. Android sudoku generator.
 
 ### prerequisite.
@@ -90,7 +90,7 @@ If the device is connected via [WiFi](https://help.famoco.com/developers/dev-env
 
 ![connect with device](https://user-images.githubusercontent.com/39918471/129463241-f707643f-5920-4e59-b956-1b691b0f64de.png)
 
-If all necessary prepartions have been done, the user can push the start button. After aproximatively 30 seconds for the module to process the screenshot, a pygame window will appear with the same grid as the one on the android device.
+If all necessary preparations have been done, the user can push the start button. a pygame window will appear with the same grid as the one on the android device.
 
 ![grid from device](https://user-images.githubusercontent.com/39918471/129463248-f4456802-3302-4804-9dc7-1446feeb92a0.png)
 
