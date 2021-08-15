@@ -1,4 +1,4 @@
-d via# 1. Description.
+# 1. Description.
 
 
 
@@ -34,14 +34,14 @@ this litle GUI will appear:
   
 ## 1.1. Sudoku game + solver.
 
-The sudoku game is a classic sudoku game, each time it is launched it starts with different grid chosen in a database of over **1 million** grids.
+The sudoku game is a classic sudoku game, each time it is launched it starts with a different grid chosen in a database of over **1 million** grids.
 
 ![Pygame window](https://user-images.githubusercontent.com/39918471/129463274-0fa4644b-8eb5-49d8-9aa5-11b1a1349be2.png)
 
-The solver algorithm is an customized iterative _**Crosshatching algorithm**_ that fills x number of cases at each iteration.
-For all the empty cases of a given line, column or sub-grid of the sudoku grid, the algorithm tries each number from 1 to nine and fill the case with a number iff the number is the only possible solution.
+The solver algorithm is a customized iterative _**Crosshatching algorithm**_ that fills x number of cases at each iteration.
+For all the empty cases in a given line, column or sub-grid of the sudoku grid, the algorithm tries each number from 1 to 9 and fills the case with a number if the number is the only possible solution.
 
-![Crosshathing illustration.](image2.png)
+![crosshatching illustration](https://user-images.githubusercontent.com/39918471/129475459-df6452ba-3924-42b6-be34-6fcab40e2157.png)
 ## a. commands
 
 `esc` → Clear the grid.
@@ -59,15 +59,15 @@ For all the empty cases of a given line, column or sub-grid of the sudoku grid, 
 
 This module requires the user to have [Fassor sudoku android app](https://play.google.com/store/apps/details?id=com.fassor.android.sudoku&hl=en&gl=US) installed on his android device.
 
-This module also requires the user to  [**install ADB**](https://www.xda-developers.com/install-adb-windows-macos-linux/) on his computer and connect his android to the computer. 
+This module also requires the user to  [**install ADB (Android Debbuging Bridge)**](https://www.xda-developers.com/install-adb-windows-macos-linux/) on his computer and connect his android device to the computer. 
 
 In order to execute adb commands in a python script, the user has to install the pure-python-adb library by executing the following command :
 
 ``` pip install -U pure-python-adb```
 
-adb (Android Debbuging Bridge) permits the user (among other things) to take screen shots of the android device and saves it on the computer. This module leverages that possibility to take screen shots of the sudoku app and converts the into an array of integer using [openCV](https://pypi.org/project/opencv-python/) for image porcessing and [pytesseract](https://pypi.org/project/pytesseract/) for character recognition.
+adb permits the user (among other things) to take screen shots of the android device and saves it on the computer. This module leverages that feature to take screen shots of the sudoku app and to convert it into an array of integers using [openCV](https://pypi.org/project/opencv-python/) for image porcessing and [pytesseract](https://pypi.org/project/pytesseract/) for character recognition.
 
-The solver will then solve the sudoku but is at solves the sudoku, it will solve it on the android device by sending touch instructions through adb.
+The solver will then solve the sudoku directly on the android device by sending touch instructions through adb.
 
 ### Getting started.
 To launch the module, the user must specify whether his device is connected to the computer by [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/) or via USB.
@@ -75,7 +75,7 @@ If the device is connected via [WiFi](https://help.famoco.com/developers/dev-env
 
 ![connect with device android solver.](https://user-images.githubusercontent.com/39918471/129463236-7985421f-5fcd-4815-8f1d-0fe7e5d69549.png)
 
-If all necessary preparations have been done, the user can push the start button. After aproximatively 30 seconds, the solver will start solving the sudoku grid on the users android device.
+If all necessary preparations have been done, the user can push the start button. After aproximatively 30 seconds, the solver will start solving the sudoku grid on the user's android device.
 ## 1.3. Android sudoku generator.
 
 ### prerequisite.
