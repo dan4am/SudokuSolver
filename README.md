@@ -38,8 +38,8 @@ The sudoku game is a classic sudoku game, each time it is launched it starts wit
 
 ![Pygame window](https://user-images.githubusercontent.com/39918471/129479544-09f413ef-57df-466a-a715-d8562f74dbcd.png)
 
-The solver algorithm is a customized iterative _**Crosshatching algorithm**_ that fills x number of cases at each iteration.
-For all the empty cases in a given line, column or sub-grid of the sudoku grid, the algorithm tries each number from 1 to 9 and fills the case with a number if the number is the only possible solution.
+The solver algorithm is a customized iterative _**Crosshatching algorithm**_ that fills x number of cells at each iteration.
+For all the empty cells in a given line, column or sub-grid of the sudoku grid, the algorithm tries each number from 1 to 9 and fills the cell with a number if the number is the only possible solution.
 
 ![crosshatching illustration](https://user-images.githubusercontent.com/39918471/129479561-bff3f307-f955-4ce4-8121-490c35707b62.png)
 ## a. commands
