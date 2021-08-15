@@ -29,7 +29,8 @@ or
 
 this litle GUI will appear: 
 
-![Tkinter Sudoku Solver GUI.](image.jpg)
+![Sudoku Solver GUI](https://user-images.githubusercontent.com/39918471/129463260-1bc111d7-6aca-4495-b689-fa008e7c7e71.png)
+
   
 ## 1.1. Sudoku game + solver.
 
