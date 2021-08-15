@@ -91,7 +91,7 @@ This module uses the same librairies as the previous one, but instead of solving
 To launch the module, the user must specify whether his device is connected to the computer by [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/) or via USB.
 If the device is connected via [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/), the user must specify the ip address of the device, [here](https://help.simpletelly.com/article/329-how-to-find-your-android-device-ip-address) is how to retrieve it.
 
-![connect with device]!(https://user-images.githubusercontent.com/39918471/129479657-e45e54e9-18a7-4751-ae32-3c883086f05e.png)
+![connect with device](https://user-images.githubusercontent.com/39918471/129479657-e45e54e9-18a7-4751-ae32-3c883086f05e.png)
 If all necessary preparations have been done, the user can push the start button. a pygame window will appear with the same grid as the one on the android device.
 
 ![grid from device](https://user-images.githubusercontent.com/39918471/129479617-829d6bc2-a278-490f-b8b6-6f5d547a7c27.png)
