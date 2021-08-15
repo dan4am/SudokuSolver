@@ -36,6 +36,8 @@ this litle GUI will appear:
 
 The sudoku game is a classic sudoku game, each time it is launched it starts with different grid chosen in a database of over **1 million** grids.
 
+![Pygame window](https://user-images.githubusercontent.com/39918471/129463274-0fa4644b-8eb5-49d8-9aa5-11b1a1349be2.png)
+
 The solver algorithm is an customized iterative _**Crosshatching algorithm**_ that fills x number of cases at each iteration.
 For all the empty cases of a given line, column or sub-grid of the sudoku grid, the algorithm tries each number from 1 to nine and fill the case with a number iff the number is the only possible solution.
 
