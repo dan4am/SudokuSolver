@@ -54,9 +54,6 @@ For all the empty cases of a given line, column or sub-grid of the sudoku grid, 
 - [Fassor sudoku android app](https://play.google.com/store/apps/details?id=com.fassor.android.sudoku&hl=en&gl=US)
 
 
-![Tkinter Sudoku Solver GUI select android solver.](https://user-images.githubusercontent.com/39918471/129462737-374ced6e-c822-4ae9-afe6-0d10b744bf4a.png)
-
-
 This module requires the user to have [Fassor sudoku android app](https://play.google.com/store/apps/details?id=com.fassor.android.sudoku&hl=en&gl=US) installed on his android device.
 
 This module also requires the user to  [**install ADB**](https://www.xda-developers.com/install-adb-windows-macos-linux/) on his computer and connect his android to the computer. 
@@ -73,6 +70,8 @@ The solver will then solve the sudoku but is at solves the sudoku, it will solve
 To launch the module, the user must specify whether his device is connected to the computer by [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/) or via USB.
 If the device is connected via [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/), the user must specify the ip address of the device, [here](https://help.simpletelly.com/article/329-how-to-find-your-android-device-ip-address) is how to retrieve it.
 
+![connect with device android solver.](https://user-images.githubusercontent.com/39918471/129462737-374ced6e-c822-4ae9-afe6-0d10b744bf4a.png)
+
 If all necessary prepartions have been done, the user can push the start button. After aproximatively 30 seconds for the module to process the screenshot, the solver will start solving the sudoku grid on the users android device.
 ## 1.3. Android sudoku generator.
 
@@ -82,9 +81,6 @@ If all necessary prepartions have been done, the user can push the start button.
 - [pure-python-adb 0.3.0](https://pypi.org/project/pure-python-adb/)
 - [Fassor sudoku android app](https://play.google.com/store/apps/details?id=com.fassor.android.sudoku&hl=en&gl=US)
 
-![Tkinter Sudoku Solver GUI select grid from android.](image.jpg)
-
-![Tkinter Sudoku Solver GUI grid reader.](image.jpg)
 
 ### Getting started.
 This module uses the same librairies as the previous one, but instead of solving the sudoku grid, this module will copy the current sudoku grid from the android device to the pygame GUI on the computer.
@@ -92,4 +88,10 @@ This module uses the same librairies as the previous one, but instead of solving
 To launch the module, the user must specify whether his device is connected to the computer by [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/) or via USB.
 If the device is connected via [WiFi](https://help.famoco.com/developers/dev-env/adb-over-wifi/), the user must specify the ip address of the device, [here](https://help.simpletelly.com/article/329-how-to-find-your-android-device-ip-address) is how to retrieve it.
 
+![connect with device](https://user-images.githubusercontent.com/39918471/129462980-23274071-d088-4b1c-a7fe-24a4b9ceea89.png)
+
+
 If all necessary prepartions have been done, the user can push the start button. After aproximatively 30 seconds for the module to process the screenshot, a pygame window will appear with the same grid as the one on the android device.
+
+![grid from device](https://user-images.githubusercontent.com/39918471/129463178-d2651ce5-6af3-4733-b211-0e839a387dbc.png)
+
